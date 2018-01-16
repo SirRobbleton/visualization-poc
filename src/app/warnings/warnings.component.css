@@ -1,0 +1,11 @@
+h3{
+  color: darkred;
+}
+p {
+  color: #a30000;
+}
+div {
+  background-color: palevioletred;
+  padding: 20px;
+  border: 2px solid darkred;
+}

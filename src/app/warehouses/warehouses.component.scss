@@ -1,0 +1,55 @@
+#warehouses {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#warehouses td, #warehouses th {
+  border: 1px solid #1A237E;
+  //padding: 8px;
+  vertical-align: middle;
+}
+
+#warehouses tr:nth-child(even){background-color: #9FA8DA;}
+
+#warehouses tr:nth-child(odd){background-color: #C5CAE9;}
+
+#warehouses tr:hover {background-color: #E8EAF6;}
+
+#warehouses th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  //background-color: #577baf;
+  color: white;
+}
+
+//#input_free, #input_lat, #input_used, #input_lon {
+//  width: 100%;
+//}
+//
+//#input_wh, #addWarehouse {
+//  width: 20%;
+//}
+
+#warehouse, #location, #capacity {
+  width: 20%;
+}
+
+#partition {
+  width: 40%;
+}
+
+#addWarehouse {
+  margin: 0px;
+  width: 100%
+}
+
+input {
+  color: white;
+  height: 30px;
+}
+
+input::placeholder {
+  color: #C5CAE9;
+}

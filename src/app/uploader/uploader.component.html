@@ -1,0 +1,29 @@
+  <div class="container">
+    <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <input class="btn btn-primary waves-light " type='file' accept='text/xml' (change)='openFile($event)'>
+    </div>
+  </div>
+  <div *ngIf="isXmlLoaded" class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="alert alert-success">
+        <strong>Success: </strong> The XML file has been uploaded and parsed.
+      </div>
+    </div>
+  </div>
+  <div *ngIf="isXmlLoaded" class="row">
+      <div class="col-xs-4 col-sm-6 col-md-6 col-lg-6">
+        <button type="button" [routerLinkActive]="['active']" class="btn btn-primary waves-light" (click)="updateFormat('xml')"><b>XML</b></button>
+      </div>
+      <div class="col-xs-4 col-sm-6 col-md-6 col-lg-6">
+        <button type="button" [routerLinkActive]="['active']" class="btn btn-primary waves-light" (click)="updateFormat('json')"><b>JSON</b></button>
+      </div>
+  </div>
+  <div *ngIf="isXmlLoaded" class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <pre *ngIf="displayXML">{{optimizerInputXML}}</pre>
+      <pre *ngIf="!displayXML">{{optimizerInputJSON}}</pre>
+    </div>
+    <!--<pre>{{optimizerInput}}</pre>-->
+  </div>
+</div>

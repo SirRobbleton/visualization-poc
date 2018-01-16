@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-4 col-sm-6 col-md-6 col-lg-6">
+      <button type="button" [routerLinkActive]="['active']" class="btn btn-primary waves-light" (click)="transformInfo()"><b>Transform</b></button>
+    </div>
+    <div class="col-xs-4 col-sm-6 col-md-6 col-lg-6">
+      <button type="button" [routerLinkActive]="['active']" class="btn btn-primary waves-light" (click)="maximizeInfo()"><b>Maximize</b></button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div *ngIf="!isTest; then showWarning else showCurrent"></div>
+      <ng-template #showCurrent>
+        <div [@infoState]="infoState" class="alert alert-info">
+          <strong>View: </strong> This is a test.
+        </div>
+        <div [@wildState]="wildState" class="alert alert-info">
+          <strong>View: </strong> This is a  WILD test.
+          <strong>State: </strong> {{wildText}}.
+        </div>
+      </ng-template>
+      <ng-template #showWarning>
+        <div class="alert alert-info">
+          <strong>Hint: </strong> No data. Please select Week to be shown.
+        </div>
+      </ng-template>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div appVis2DGraph></div>
+    </div>
+  </div>
+</div>

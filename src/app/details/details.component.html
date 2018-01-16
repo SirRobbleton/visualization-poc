@@ -1,0 +1,9 @@
+<button btn btn-primary
+        (click)="toggleDetails()">Display Details</button>
+<hr>
+<div *ngIf="displayDetails">The secret detail is: I have no secrets!
+  <p *ngFor="let date of buttonClicks; let i = index"
+     [ngClass]="{specialStamp: i > 4}"
+     [ngStyle]="{backgroundColor: getColor(i)}">{{date}}
+  </p>
+</div>

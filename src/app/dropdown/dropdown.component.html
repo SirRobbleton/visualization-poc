@@ -1,0 +1,4 @@
+<div *ngFor="let value of styles" >
+  <a class="dropdown-item" href="#/displayPlan" (click)="chooseStyle(value)">{{value}}</a>
+  <div *ngIf="value === 'bar-size' || value === 'dot-size'" class="divider dropdown-divider"></div>
+</div>

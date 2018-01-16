@@ -1,0 +1,24 @@
+<div class="row">
+  <table class="table" id="trucks">
+    <thead>
+    <tr>
+      <th id="truck" class="primary-color-dark">Truck</th>
+      <th id="from" class="primary-color-dark">From</th>
+      <th id="to" class="primary-color-dark">To</th>
+      <th id="progress" class="primary-color-dark">Progress</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let truck of trucks">
+      <td>{{truck.name}}</td>
+      <td>{{truck.departure}}</td>
+      <td>{{truck.destination}}</td>
+      <td #chartContainer
+          (window:resize)="onResize($event)">
+        <ngb-progressbar type="info" [value]="75"></ngb-progressbar>
+        <!--<tek-progress-bar ng-if="main.isBar" class="m-tb-sm" bar-class="progress-bar-warning" ng-model="main.bar2ProgressVal" manager="main.bar2">0% </tek-progress-bar>-->
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

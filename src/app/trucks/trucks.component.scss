@@ -1,0 +1,46 @@
+#trucks {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#trucks td, #trucks th {
+  border: 1px solid #1A237E;
+  //padding: 8px;
+  vertical-align: middle;
+}
+
+#trucks tr:nth-child(even){background-color: #9FA8DA;}
+
+#trucks tr:nth-child(odd){background-color: #C5CAE9;}
+
+#trucks tr:hover {background-color: #E8EAF6;}
+
+#trucks th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  //background-color: #577baf;
+  color: white;
+}
+
+#truck, #from, #to {
+  width: 20%;
+}
+
+#progress {
+  width: 40%;
+}
+
+input {
+  color: white;
+  height: 30px;
+}
+
+input::placeholder {
+  color: #C5CAE9;
+}
+
+.ngb-progressbar {
+  height: 25px;
+}

@@ -1,0 +1,62 @@
+  <!--<div class="table-responsive">-->
+  <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+        <input #wh id="input_wh" placeholder="Warehouse ID" type="text">
+      </div>
+      <div class="col-xs-6 col-sm-6 col-md-2 col-lg-2">
+        <input #lat id="input_lat" placeholder="Latitude" type="number" class="">
+      </div>
+      <div class="col-xs-6 col-sm-6 col-md-2 col-lg-2">
+        <input #lon id="input_lon" placeholder="Longitude" type="number" class="">
+      </div>
+      <div class="col-xs-6 col-sm-6 col-md-2 col-lg-2">
+        <input #free id="input_free" placeholder="Free Space" type="number" class="">
+      </div>
+      <div class="col-xs-6 col-sm-6 col-md-2 col-lg-2">
+        <input #used id="input_used" placeholder="Used Space" type="number" class="">
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+        <input id="addWarehouse"
+               class="btn primary-color-dark"
+               value="Add Warehouse"
+               type="submit"
+               (click)="addNewWarehouse(wh.value, lat.value, lon.value, free.value, used.value)">
+      </div>
+    </div>
+  <br>
+  <br>
+  <br>
+    <div class="row">
+      <table class="table" id="warehouses">
+        <thead>
+        <tr>
+          <th id="warehouse" class="primary-color-dark">Warehouse</th>
+          <th id="location" class="primary-color-dark">Location</th>
+          <th id="capacity" class="primary-color-dark">Capacity</th>
+          <th id="partition" class="primary-color-dark">Partitioning</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let warehouse of warehouses" (click)="rowSelected(warehouse)">
+          <td>{{warehouse.name}}</td>
+          <td>{{warehouse.lat}} , {{warehouse.lon}}</td>
+          <td>{{warehouse.getCapacity().total}}</td>
+          <td>
+            <app-warehouse [warehouse]="warehouse"
+                           [chartSize]="chartSize"></app-warehouse>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+  </div>
+  <!--<div class="row">-->
+    <!--<div class="table col-xs-12 col-sm-12 col-md-12 col-lg-12">-->
+      <!--<app-truck #warehouseComponent-->
+                     <!--[truck]="truck"-->
+                     <!--[chartSize]="chartSize"></app-truck>-->
+    <!--</div>-->
+  <!--</div>-->
+  <!--</div>-->
+
+<!--<app-truck *ngFor="let truck of warehouses"-->
+               <!--[truck]="truck"></app-truck>-->

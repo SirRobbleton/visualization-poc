@@ -1,0 +1,98 @@
+<div class="container">
+  <div *ngIf="isXmlLoaded" class="row">
+    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <button type="button" [routerLinkActive]="['active']" class="btn btn-primary waves-light" (click)="switchGraph()">Switch to  <b>{{nextGraph}}</b>  Graph</button>
+    </div>
+    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+    </div>
+  </div>
+  <div *ngIf="isXmlLoaded" class="row">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <button type="button" [routerLinkActive]="['active']" class="btn btn-primary waves-light" (click)="updateData('A')"><b>Week A</b></button>
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <button type="button" [routerLinkActive]="['active']" class="btn btn-primary waves-light" (click)="updateData('B')"><b>Week B</b></button>
+    </div>
+  </div>
+  <div *ngIf="isXmlLoaded" class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div *ngIf="noData; then showWarning else showCurrent"></div>
+      <ng-template #showCurrent>
+        <div class="alert alert-info">
+          <strong>View: Week </strong> {{currentView}}
+        </div>
+      </ng-template>
+      <ng-template #showWarning>
+        <div class="alert alert-info">
+          <strong>Hint: </strong> No data. Please select Week to be shown.
+        </div>
+      </ng-template>
+    </div>
+  </div>
+  <div *ngIf="isXmlLoaded" class="row">
+    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+      <div *ngIf="display3d; then show3d else show2d"></div>
+      <ng-template #show3d>
+        <div [ngClass]="{
+          'invisible':this.noData || !display3d,
+          'visible':!this.noData && display3d
+          }" appVis3DGraph></div>
+      </ng-template>
+      <ng-template #show2d>
+        <div appVis2DGraph></div>
+        <!--[ngClass]="{-->
+          <!--'invisible':this.noData || display3d,-->
+          <!--'visible':!this.noData && !display3d-->
+          <!--}"-->
+      </ng-template>
+    </div>
+    <div *ngIf="!noData && display3d" class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
+      <input [(ngModel)]="showPerspective" (change)="togglePerspective()" type="checkbox" name="perspectiveSwitch" id="perspectiveSwitch">
+      <label for="perspectiveSwitch">Show Perspective</label>
+      <br>
+      <input [disabled]="isLastSelected('SMT')"
+             [(ngModel)]="showSMT" (change)="toggleView()" type="checkbox" name="smtSwitch" id="smtSwitch">
+      <label for="smtSwitch">Show Resource: SMT</label>
+      <br>
+      <input [disabled]="isLastSelected('TEST')"
+             [(ngModel)]="showTEST" (change)="toggleView()" type="checkbox" name="testSwitch" id="testSwitch">
+      <label for="testSwitch">Show Resource: TEST</label>
+      <br>
+      <div class="btn-group" dropdown>
+        <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle waves-light" mdbRippleRadius>
+          Change Style
+        </button>
+        <br><br>
+        <app-dropdown class="dropdown-menu dropdown-primary" [styles]="styleList" (selectedStyle)="changeStyle($event)"></app-dropdown>
+      </div>
+      <div *ngIf="isSelected" [@detailState]="detailState" class="alert alert-info col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <b>Overview:</b>
+        <hr>
+        <table class="table">
+          <thead>
+          <tr>
+            <th></th>
+            <th>Resource</th>
+            <th>Day (Week)</th>
+            <th>POT</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <th></th>
+            <td>{{selectedData.resource}}</td>
+            <td>{{selectedData.day}} ({{selectedData.week}})</td>
+            <td>{{selectedData.z}}</td>
+          </tr>
+          </tbody>
+        </table>
+        <br><br>
+        <b>Assignments:</b>
+        <hr>
+        <p *ngFor="let assignment of selectedData.assignments">Assignment ID -> <b>{{assignment}}</b></p>
+      </div>
+    </div>
+  </div>
+</div>

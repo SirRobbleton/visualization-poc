@@ -1,0 +1,11 @@
+div {
+  border: 1px solid #817e8b;
+}
+
+.online {
+  color: white;
+}
+
+.offline {
+  color: yellow;
+}

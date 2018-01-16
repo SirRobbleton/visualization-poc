@@ -1,0 +1,37 @@
+.btn-group {
+  margin: 5px;
+}
+
+input {
+  margin: 5px;
+  text-align: center;
+  color: white;
+}
+
+pre {
+  margin: 5px;
+}
+
+.alert {
+  margin: 5px;
+}
+
+strong {
+  text-align: right;
+}
+/*.content {*/
+  /*background-color: rgba(46,81,104,1);*/
+  /*!*#2e5168;*!*/
+/*}*/
+
+tr {
+  border: 1px solid steelblue;
+}
+
+tr th {
+  border-bottom: 1px solid steelblue;
+}
+
+input[type=checkbox] + label {
+  color: white;
+}
