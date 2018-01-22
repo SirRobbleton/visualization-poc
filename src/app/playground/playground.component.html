@@ -31,4 +31,24 @@
       <div appVis2DGraph></div>
     </div>
   </div>
+  <div class="row">
+    <ng-template #content let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h4 class="modal-title">Storage History</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div #areaChart class="modal-body">
+        <app-storage-history></app-storage-history>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-light" (click)="c('Close click')">Close</button>
+      </div>
+    </ng-template>
+
+    <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button>
+  </div>
+  <div class="row">
+  </div>
 </div>

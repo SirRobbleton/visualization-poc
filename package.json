@@ -31,6 +31,7 @@
     "amcharts3-angular2": "^1.2.1",
     "ammap3": "^3.21.12",
     "angular-bootstrap-md": "^4.2.4",
+    "angular-font-awesome": "^3.1.2",
     "angular-tek-progress-bar": "^0.2.1",
     "bootstrap": "^3.3.7",
     "chart.js": "^2.5.0",

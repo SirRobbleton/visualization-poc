@@ -1,21 +1,51 @@
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-  <h1>{{warehouse.name}}</h1>
-  <hr>
+<div class="row animated slideInRight">
+  <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+    <h1>{{warehouse.name}}</h1>
+    <hr>
+  </div>
 </div>
-<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-  <h2>Address</h2>
+<div class="row animated slideInRight">
+  <div class="col-3 col-sm-3 col-md-3 col-lg-3">
+    <a style="color: #0D47A1" target="_blank" href="https://www.google.com.sg/maps/place/1%C2%B019'57.1%22N+103%C2%B051'03.5%22E/@1.3663203,103.7092234,11z/data=!4m5!3m4!1s0x0:0x0!8m2!3d{{warehouse.lat}}!4d{{warehouse.lon}}">
+      <i class="fa fa-map-marker fa-3x" aria-hidden="true"></i>
+    </a>
+  </div>
+  <div class="col-9 col-sm-9 col-md-9 col-lg-9">
+    <a target="_blank" href="https://www.google.com.sg/maps/place/1%C2%B019'57.1%22N+103%C2%B051'03.5%22E/@1.3663203,103.7092234,11z/data=!4m5!3m4!1s0x0:0x0!8m2!3d{{warehouse.lat}}!4d{{warehouse.lon}}">
+      21 Bishan Street #09-02, 656121 SG
+    </a>
+  </div>
 </div>
-<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-  <p>Street# Some Street Block#</p>
-  <p>Postal Code</p>
-  <p>City</p>
+<br>
+<div class="row animated slideInRight">
+  <div class="col-3 col-sm-3 col-md-3 col-lg-3">
+    <a style="color: #0D47A1;" ><i (click)="open(content)" class="fa fa-area-chart fa-3x" aria-hidden="true"></i></a>
+  </div>
+  <div class="col-9 col-sm-9 col-md-9 col-lg-9">
+    <p id="history">Storage History</p>
+  </div>
 </div>
-<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-  <h2>Links</h2>
-</div>
-<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-  <a href="https://www.google.com.sg/maps/place/1%C2%B019'57.1%22N+103%C2%B051'03.5%22E/@1.3663203,103.7092234,11z/data=!4m5!3m4!1s0x0:0x0!8m2!3d{{warehouse.lat}}!4d{{warehouse.lon}}">Google Map Location</a>
-  <br>
-  <a href="#">See Storage History</a>
+<br>
+<div class="row animated slideInRight">
+  <div class="col-3 col-sm-3 col-md-3 col-lg-3">
+    <a style="color: #0D47A1;"><i class="fa fa-truck fa-flip-horizontal fa-3x" aria-hidden="true"></i></a>
+  </div>
+  <div class="col-9 col-sm-9 col-md-9 col-lg-9">
+    <p>Delivery Overview</p>
+  </div>
 </div>
 
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Storage History</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <app-storage-history></app-storage-history>
+  </div>
+  <!--<div class="modal-footer">-->
+    <!--<button type="button" class="btn btn-outline-light" (click)="c('Close click')">Close</button>-->
+  <!--</div>-->
+</ng-template>

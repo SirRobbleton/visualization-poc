@@ -5,6 +5,7 @@ import * as jp from 'jsonpath';
 import * as colors from './services/colors';
 
 import {TestData} from './services/data.model';
+import {WarehouseDataService} from "./services/warehouse-data.service";
 
 @Component({
   selector: 'app-root',
@@ -19,8 +20,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {}
 
-  constructor(private elementRef: ElementRef) {
-
+  constructor(private elementRef: ElementRef, private whService: WarehouseDataService) {
   }
 
   ngAfterViewInit() {

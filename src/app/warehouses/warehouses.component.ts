@@ -2,6 +2,7 @@ import {Component, DoCheck, ElementRef, EventEmitter, OnInit, Output, ViewChild}
 import {Warehouse} from '../services/warehouse.model';
 import {WarehouseDataService} from '../services/warehouse-data.service';
 import {WarehouseComponent} from '../warehouse/warehouse.component';
+import {DatabaseService} from "../services/database.service";
 
 @Component({
   selector: 'app-warehouses',
@@ -16,7 +17,7 @@ export class WarehousesComponent implements OnInit, DoCheck {
   public warehouses: Warehouse[];
   public chartSize: any[] = [];
 
-  constructor(private whService: WarehouseDataService) {
+  constructor(private whService: WarehouseDataService, private dbService: DatabaseService) {
     this.warehouses = this.whService.getWarehouses();
   }
 

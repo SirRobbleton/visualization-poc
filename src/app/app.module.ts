@@ -18,7 +18,7 @@ import { Vis3dGraphDirective } from './visuals/vis3dgraph.directive';
 import {VisualDataService} from './services/visual-data.service';
 import { DropdownComponent } from './dropdown/dropdown.component';
 import * as routes from './services/routes';
-import {JsonpModule} from '@angular/http';
+import {HttpModule, JsonpModule} from '@angular/http';
 import {RouterModule} from '@angular/router';
 import { UploaderComponent } from './uploader/uploader.component';
 import { NavComponent } from './nav/nav.component';
@@ -33,6 +33,9 @@ import {WarehouseDataService} from './services/warehouse-data.service';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import { TrucksComponent } from './trucks/trucks.component';
 import { WarehouseDetailsComponent } from './warehouse-details/warehouse-details.component';
+import {AngularFontAwesomeModule} from 'angular-font-awesome';
+import { StorageHistoryComponent } from './storage-history/storage-history.component';
+import {DatabaseService} from "./services/database.service";
 
 @NgModule({
   declarations: [
@@ -54,6 +57,7 @@ import { WarehouseDetailsComponent } from './warehouse-details/warehouse-details
     WarehouseComponent,
     TrucksComponent,
     WarehouseDetailsComponent,
+    StorageHistoryComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,10 +70,12 @@ import { WarehouseDetailsComponent } from './warehouse-details/warehouse-details
     RouterModule.forRoot(routes.routes, {useHash: true}),
     // PerfectScrollbarModule,
     AmChartsModule,
-    NgxChartsModule
+    NgxChartsModule,
+    AngularFontAwesomeModule,
+    HttpModule
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
-  providers: [ DataService, VisualDataService, AmChartsService, WarehouseDataService, NgbProgressbarConfig],
+  providers: [ DataService, VisualDataService, AmChartsService, WarehouseDataService, NgbProgressbarConfig, DatabaseService],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

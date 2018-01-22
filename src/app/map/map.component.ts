@@ -7,6 +7,7 @@ import {WarehouseDataService} from '../services/warehouse-data.service';
 import {Warehouse} from '../services/warehouse.model';
 import * as resources from '../services/resource-constants';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {DatabaseService} from "../services/database.service";
 
 @Component({
   selector: 'app-map',
@@ -228,8 +229,13 @@ export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
   };
 
   constructor(private elRef: ElementRef, private AmCharts: AmChartsService, private whService: WarehouseDataService) {
-    this.refreshWarehouses();
+    // this.refreshWarehouses();
     console.log('MAP: Constructor');
+    this.whService.finishedLoading.subscribe((value: boolean) => {
+      if (value) {
+       this.refreshWarehouses();
+      }
+    });
   }
 
   ngOnInit() {

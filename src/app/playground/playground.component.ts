@@ -1,6 +1,7 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Vis2dGraphDirective} from '../visuals/vis2dgraph.directive';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-playground',
@@ -68,7 +69,17 @@ import {Vis2dGraphDirective} from '../visuals/vis2dgraph.directive';
         animate(1000)
       ]),
     ])
-  ]
+  ],
+  encapsulation: ViewEncapsulation.None,
+  styles: [`
+    .dark-modal .modal-content {
+      background-color: #1A5276;
+      color: white;
+    }
+    .dark-modal .close {
+      color: white;
+    }
+  `]
 })
 export class PlaygroundComponent implements OnInit {
   public infoState = 'hidden';
@@ -76,11 +87,30 @@ export class PlaygroundComponent implements OnInit {
   public wildText = 'Normal';
   public isTest = true;
 
-  @ViewChild(Vis2dGraphDirective) private _2dGraph: Vis2dGraphDirective;
+  @ViewChild('areaChart') public areaChart: ElementRef;
 
-  constructor() { }
+  @ViewChild(Vis2dGraphDirective) private _2dGraph: Vis2dGraphDirective;
+  closeResult: string;
+
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit() {
+  }
+
+  open(content) {
+    this.modalService.open(content, { windowClass: 'dark-modal' });
+    // this.onResize();
+  }
+
+  onResize() {
+    const hostElem = this.areaChart.nativeElement;
+
+    if (hostElem.parentNode !== null) {
+      // Get the container dimensions
+      const dims = hostElem.getBoundingClientRect();
+      // this.whService.setChartColSize(dims.width - 18);
+      console.log('MODAL: ' + (dims.width) + ' ' + (dims.height));
+    }
   }
 
   public transformInfo() {
