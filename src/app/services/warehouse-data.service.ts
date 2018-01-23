@@ -1,11 +1,12 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {Warehouse} from './warehouse.model';
-import {BehaviorSubject} from "rxjs/BehaviorSubject";
-import {DatabaseService} from "./database.service";
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {DatabaseService} from './database.service';
 
 @Injectable()
 export class WarehouseDataService {
   public chartColumnSize = new BehaviorSubject<number>(10);
+  public areaChartDim = new BehaviorSubject<any>({});
   public warehouses: Warehouse[] = [];
   public finishedLoading = new BehaviorSubject<boolean>(false);
 
@@ -19,7 +20,7 @@ export class WarehouseDataService {
     // this.warehouses.push(wh2);
     // this.warehouses.push(wh3);
     // this.warehouses.push(wh4);
-    let status = this.getFromDatabase();
+    const status = this.getFromDatabase();
     console.log('WH SERVICE: Constructor ' + status + this.warehouses.length);
   }
 
@@ -38,10 +39,17 @@ export class WarehouseDataService {
     this.chartColumnSize.next(width);
   }
 
+  public setAreaChartDim(width: number, height: number) {
+    const dims = {
+      'width': width,
+      'height': height
+    };
+    this.areaChartDim.next(dims);
+  }
+
   public addWarehouse(wh: Warehouse) {
     this.warehouses.push(wh);
-    console.log('List of Warehouses: ' + this.warehouses.length);
-    // console.log(JSON.stringify(this.warehouses));
+    console.log('Data Service - List of Warehouses: ' + this.warehouses.length);
     this.saveToDatabase(this.warehouses);
   }
 
@@ -57,7 +65,7 @@ export class WarehouseDataService {
     this.dbService.getWarehouses()
       .subscribe(
         (warehouses: any[]) => {
-          for (let warehouse of warehouses) {
+          for (const warehouse of warehouses) {
             const wh = new Warehouse(warehouse.lat, warehouse.lon, '', warehouse.name, warehouse.freeAbsolute, warehouse.usedAbsolute);
             this.warehouses.push(wh);
           }
@@ -66,25 +74,5 @@ export class WarehouseDataService {
         },
         (error) => console.log(error),
       );
-  }
-
-  public getChartData(index: number) {
-    const wh = this.warehouses[index];
-    const whData = [
-      {
-        'name': wh.name,
-        'series': [
-          {
-            'name': 'Free',
-            'value': wh.getCapacity().free
-          },
-          {
-            'name': 'Used',
-            'value': wh.getCapacity().used
-          }
-        ]
-      }
-    ];
-    return whData;
   }
 }

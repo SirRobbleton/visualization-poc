@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, DoCheck, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {Warehouse} from '../services/warehouse.model';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 

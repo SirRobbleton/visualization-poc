@@ -1,5 +1,5 @@
 import {
-  AfterViewChecked, AfterViewInit, Component, DoCheck, ElementRef, OnDestroy, OnInit,
+  AfterViewInit, Component, DoCheck, ElementRef, OnDestroy, OnInit,
   ViewChild
 } from '@angular/core';
 import { AmChartsService, AmChart } from '@amcharts/amcharts3-angular';
@@ -7,7 +7,6 @@ import {WarehouseDataService} from '../services/warehouse-data.service';
 import {Warehouse} from '../services/warehouse.model';
 import * as resources from '../services/resource-constants';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import {DatabaseService} from "../services/database.service";
 
 @Component({
   selector: 'app-map',
@@ -45,8 +44,9 @@ import {DatabaseService} from "../services/database.service";
     ])
     ]
 })
-export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
+export class MapComponent implements OnInit, OnDestroy, DoCheck, AfterViewInit {
   @ViewChild('chartContainer') chartContainer: ElementRef;
+  @ViewChild('detailContainer') detailContainer: ElementRef;
 
   public counter = 0;
 
@@ -66,7 +66,7 @@ export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
   public colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
   };
-  public view = [400, 200];
+  public view = [0, 0];
   public gradient = false;
 
   public config = {
@@ -228,8 +228,7 @@ export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
     // }]
   };
 
-  constructor(private elRef: ElementRef, private AmCharts: AmChartsService, private whService: WarehouseDataService) {
-    // this.refreshWarehouses();
+  constructor(private AmCharts: AmChartsService, private whService: WarehouseDataService) {
     console.log('MAP: Constructor');
     this.whService.finishedLoading.subscribe((value: boolean) => {
       if (value) {
@@ -241,12 +240,29 @@ export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {
     this.refreshWarehouses();
     console.log('MAP: OnInit');
+    this.whService.areaChartDim.subscribe((dims: any) => {
+      if (dims.width !== this.view[0]) {
+        if (dims.width < 335) {
+          this.view = [dims.width, dims.height];
+        } else {
+          this.view = [dims.width + dims.width * 0.5, dims.height];
+        }
+      }
+    });
   }
 
   ngAfterViewInit() {
     // this.buildMap();
     console.log('MAP: AfterViewInit');
-    this.addListener()
+    this.addListener();
+  }
+
+  ngDoCheck() {
+    this.counter++;
+    if (this.counter > 6 && this.counter < 7) {
+      this.onResize();
+      console.log('MAPS DoCheck:' + this.counter);
+    }
   }
 
   // ngAfterViewInit() {
@@ -331,15 +347,26 @@ export class MapComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onResize() {
-    const hostElem = this.chartContainer.nativeElement;
+    const hostElem = this.detailContainer.nativeElement;
 
     if (hostElem.parentNode !== null) {
       // Get the container dimensions
       const dims = hostElem.getBoundingClientRect();
-      this.view = [dims.width, 200];
-      console.log('WH INFO: ' + (dims.width));
+      this.whService.setAreaChartDim(dims.width, dims.height);
+      console.log('DETAIL DIMENSIONS: ' + (dims.width));
     }
   }
+
+  // onResize() {
+  //   const hostElem = this.chartContainer.nativeElement;
+  //
+  //   if (hostElem.parentNode !== null) {
+  //     // Get the container dimensions
+  //     const dims = hostElem.getBoundingClientRect();
+  //     this.view = [dims.width, 300];
+  //     console.log('WH INFO: ' + (dims.width));
+  //   }
+  // }
 
   public transformInfo() {
     switch (this.infoState) {

@@ -14,7 +14,6 @@ export class WarehouseComponent implements OnInit, DoCheck {
 
   @Input('warehouse') public warehouse: Warehouse;
   @Input('chartSize') public chartSize: any[];
-  public counter = 0;
 
   whData: any[];
   //
@@ -40,14 +39,19 @@ export class WarehouseComponent implements OnInit, DoCheck {
   ngOnInit() {
     this.whData = this.createChartData();
     console.log('OnInit Warehouse');
-  }
-
-  ngDoCheck() {
     this.whService.chartColumnSize.subscribe((size: number) => {
       if (size !== this.view[0]) {
         this.view = [size, 50];
       }
     });
+  }
+
+  ngDoCheck() {
+    // this.whService.chartColumnSize.subscribe((size: number) => {
+    //   if (size !== this.view[0]) {
+    //     this.view = [size, 50];
+    //   }
+    // });
   }
 
   public createChartData() {

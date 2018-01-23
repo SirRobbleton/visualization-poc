@@ -15,7 +15,6 @@ export class WarehousesComponent implements OnInit, DoCheck {
   @Output() selectedWarehouse = new EventEmitter();
 
   public warehouses: Warehouse[];
-  public chartSize: any[] = [];
 
   constructor(private whService: WarehouseDataService, private dbService: DatabaseService) {
     this.warehouses = this.whService.getWarehouses();
