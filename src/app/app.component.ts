@@ -20,7 +20,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {}
 
-  constructor(private elementRef: ElementRef, private whService: WarehouseDataService) {
+  constructor(private elementRef: ElementRef) {
   }
 
   ngAfterViewInit() {

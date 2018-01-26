@@ -2,6 +2,7 @@ import {EventEmitter, Injectable} from '@angular/core';
 import {Warehouse} from './warehouse.model';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {DatabaseService} from './database.service';
+import {Address} from "./address.model";
 
 @Injectable()
 export class WarehouseDataService {
@@ -20,8 +21,8 @@ export class WarehouseDataService {
     // this.warehouses.push(wh2);
     // this.warehouses.push(wh3);
     // this.warehouses.push(wh4);
-    const status = this.getFromDatabase();
-    console.log('WH SERVICE: Constructor ' + status + this.warehouses.length);
+    // const status = this.getFromDatabase();
+    // console.log('WH SERVICE: Constructor ' + status + this.warehouses.length);
   }
 
   public getWarehouses() {
@@ -49,7 +50,7 @@ export class WarehouseDataService {
 
   public addWarehouse(wh: Warehouse) {
     this.warehouses.push(wh);
-    console.log('Data Service - List of Warehouses: ' + this.warehouses.length);
+    console.log('WH SERVICE - List of Warehouses: ' + this.warehouses.length);
     this.saveToDatabase(this.warehouses);
   }
 
@@ -61,18 +62,28 @@ export class WarehouseDataService {
       );
   }
 
-  public getFromDatabase() {
-    this.dbService.getWarehouses()
+  public getFromDatabase(token: string) {
+    console.log('WH SERVICE: getFromDatabase');
+    this.dbService.getWarehouses(token)
       .subscribe(
         (warehouses: any[]) => {
-          for (const warehouse of warehouses) {
-            const wh = new Warehouse(warehouse.lat, warehouse.lon, '', warehouse.name, warehouse.freeAbsolute, warehouse.usedAbsolute);
-            this.warehouses.push(wh);
+          console.log(warehouses);
+          if (warehouses.length !== 0) {
+            this.warehouses = [];
+            for (const warehouse of warehouses) {
+              const adr = warehouse.address;
+              const address = new Address(adr._city, adr._streetNumber, adr._route, adr._country, adr._postalCode);
+              const wh = new Warehouse(warehouse.lat, warehouse.lon, '',
+                warehouse.name, warehouse.freeAbsolute,
+                warehouse.usedAbsolute, address);
+              this.warehouses.push(wh);
+            }
+            console.log(this.warehouses);
+            this.finishedLoading.next(true);
           }
-          console.log(this.warehouses);
           this.finishedLoading.next(true);
         },
-        (error) => console.log(error),
+        (error) => console.log(error)
       );
   }
 }

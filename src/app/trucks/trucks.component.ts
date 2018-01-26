@@ -41,7 +41,7 @@ export class TrucksComponent implements OnInit, DoCheck {
     this.counter++;
     if (this.counter > 4 && this.counter < 6) {
       this.onResize();
-      console.log('TRUCKS DoCheck:' + this.counter);
+      // console.log('TRUCKS DoCheck:' + this.counter);
     }
   }
 
@@ -52,7 +52,7 @@ export class TrucksComponent implements OnInit, DoCheck {
       // Get the container dimensions
       const dims = hostElem.getBoundingClientRect();
       this.whService.setChartColSize(dims.width - 18);
-      console.log('TRUCK PROGRESS: ' + (dims.width));
+      // console.log('TRUCK PROGRESS: ' + (dims.width));
     }
   }
 }

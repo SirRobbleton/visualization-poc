@@ -1,3 +1,5 @@
+import {Address} from "./address.model";
+
 export class Warehouse {
   public lat: number;
   public lon: number;
@@ -7,8 +9,9 @@ export class Warehouse {
   private usedAbsolute: number;
   private freeAbsolute: number;
   private totalSpace: number;
+  public address: Address;
 
-  constructor (lat: number, lon: number, imagePath: string, name: string, free: number, used: number) {
+  constructor (lat: number, lon: number, imagePath: string, name: string, free: number, used: number, address?: Address) {
     this.lon = lon;
     this.lat = lat;
     this.imagePath = imagePath;
@@ -16,6 +19,7 @@ export class Warehouse {
     this.usedAbsolute = used;
     this.freeAbsolute = free;
     this.totalSpace = Number(free) + Number(used);
+    this.address = address;
   }
 
   public setCapacity (used: number, free: number) {

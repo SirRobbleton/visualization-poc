@@ -35,7 +35,12 @@ import { TrucksComponent } from './trucks/trucks.component';
 import { WarehouseDetailsComponent } from './warehouse-details/warehouse-details.component';
 import {AngularFontAwesomeModule} from 'angular-font-awesome';
 import { StorageHistoryComponent } from './storage-history/storage-history.component';
-import {DatabaseService} from "./services/database.service";
+import {DatabaseService} from './services/database.service';
+import { SignupComponent } from './auth/signup/signup.component';
+import {AuthService} from './services/auth.service';
+import { LoginComponent } from './auth/login/login.component';
+import { AuthComponent } from './auth/auth/auth.component';
+import {AgmCoreModule} from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -58,6 +63,9 @@ import {DatabaseService} from "./services/database.service";
     TrucksComponent,
     WarehouseDetailsComponent,
     StorageHistoryComponent,
+    SignupComponent,
+    LoginComponent,
+    AuthComponent,
   ],
   imports: [
     BrowserModule,
@@ -72,10 +80,14 @@ import {DatabaseService} from "./services/database.service";
     AmChartsModule,
     NgxChartsModule,
     AngularFontAwesomeModule,
-    HttpModule
+    HttpModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCP6Yz9RVpxNpwqjtxVokMmHu5_gM2duTU',
+      libraries: ['places']
+    }),
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
-  providers: [ DataService, VisualDataService, AmChartsService, WarehouseDataService, NgbProgressbarConfig, DatabaseService],
+  providers: [ DataService, VisualDataService, AmChartsService, WarehouseDataService, NgbProgressbarConfig, AuthService, DatabaseService],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

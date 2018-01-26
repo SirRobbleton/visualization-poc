@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, ElementRef, OnInit} from '@angular/core';
 import {VisualDataService} from '../services/visual-data.service';
 import * as colors from '../services/colors';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-nav',
@@ -14,6 +15,10 @@ export class NavComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    firebase.initializeApp({
+      apiKey: 'AIzaSyAO7pxnm0So3C6X-YCp-E-VaZx0xJFK7aw',
+      authDomain: 'visualization-poc.firebaseapp.com'
+    });
   }
 
   ngAfterViewInit() {

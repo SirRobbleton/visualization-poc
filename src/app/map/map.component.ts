@@ -1,5 +1,5 @@
 import {
-  AfterViewInit, Component, DoCheck, ElementRef, OnDestroy, OnInit,
+  AfterViewInit, Component, DoCheck, ElementRef, NgZone, OnDestroy, OnInit,
   ViewChild
 } from '@angular/core';
 import { AmChartsService, AmChart } from '@amcharts/amcharts3-angular';
@@ -7,6 +7,8 @@ import {WarehouseDataService} from '../services/warehouse-data.service';
 import {Warehouse} from '../services/warehouse.model';
 import * as resources from '../services/resource-constants';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {AuthService} from '../services/auth.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-map',
@@ -48,7 +50,9 @@ export class MapComponent implements OnInit, OnDestroy, DoCheck, AfterViewInit {
   @ViewChild('chartContainer') chartContainer: ElementRef;
   @ViewChild('detailContainer') detailContainer: ElementRef;
 
-  public counter = 0;
+  public isLoggedIn;
+
+  public initCounter = 0;
 
   public infoState = 'hidden';
 
@@ -57,16 +61,18 @@ export class MapComponent implements OnInit, OnDestroy, DoCheck, AfterViewInit {
   public selectedWh: Warehouse;
   public isWhSelected = false;
   public isOld = false;
+  public isDataLoaded = false;
 
   public warehouseSVG = resources.warehouseSVG;
   public truck1SVG = resources.truck1SVG;
   public truck2SVG = resources.truck2SVG;
+  public truck3SVG = resources.truck3SVG;
 
   public results = [];
   public colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
   };
-  public view = [0, 0];
+  public view = [];
   public gradient = false;
 
   public config = {
@@ -78,9 +84,9 @@ export class MapComponent implements OnInit, OnDestroy, DoCheck, AfterViewInit {
       'alpha': 0.4
     },
     'imagesSettings': {
-      'color': '#153094',
+      // 'color': '#153094',
       'rollOverColor': '#142069',
-      'selectedColor': '#142069',
+      // 'selectedColor': '#142069',
       'selectedScale': 1.2,
       'pauseDuration': 0.2,
       'animationDuration': 100,
@@ -97,13 +103,13 @@ export class MapComponent implements OnInit, OnDestroy, DoCheck, AfterViewInit {
      */
     'dataProvider': {
       'map': 'singaporeHigh',
-      'lines': [ {
-        'id': 'line1',
-        'arc': -0.55,
-        'alpha': 0.5,
-        'latitudes': [ 1.32, 1.32 ],
-        'longitudes': [ 103.685, 103.785 ]
-      }],
+      // 'lines': [ {
+      //   'id': 'line1',
+      //   'arc': -0.55,
+      //   'alpha': 0.5,
+      //   'latitudes': [ 1.32, 1.32 ],
+      //   'longitudes': [ 103.685, 103.785 ]
+      // }],
       'images': [
         // {
         //   'svgPath': this.truckSVG,
@@ -218,26 +224,35 @@ export class MapComponent implements OnInit, OnDestroy, DoCheck, AfterViewInit {
         // }
       ]
     }
-    // /**
-    //  * Add event to execute when the map is zoomed/moved
-    //  * It also is executed when the map first loads
-    //  */
-    // 'listeners': [{
-    //   'event': 'positionChanged',
-    //   'method': this.updateCustomMarkers
-    // }]
   };
 
-  constructor(private AmCharts: AmChartsService, private whService: WarehouseDataService) {
+  constructor(private router: Router,
+              private AmCharts: AmChartsService,
+              private whService: WarehouseDataService,
+              private authService: AuthService) {
     console.log('MAP: Constructor');
-    this.whService.finishedLoading.subscribe((value: boolean) => {
-      if (value) {
-       this.refreshWarehouses();
-      }
-    });
+    // this.whService.finishedLoading.subscribe((value: boolean) => {
+    //   if (value) {
+    //     this.isDataLoaded = true;
+    //     this.refreshWarehouses();
+    //   }
+    // });
+    // this.whService.getFromDatabase();
   }
 
   ngOnInit() {
+    this.whService.finishedLoading.subscribe(
+      (value: boolean) => {
+        if (!value) {
+          this.router.navigateByUrl('auth');
+        }
+      }
+    );
+    this.authService.loginSuccessful.subscribe(
+      (value: string) => {
+        value === 'success' ? this.isLoggedIn = true : this.isLoggedIn = false;
+      }
+    );
     this.refreshWarehouses();
     console.log('MAP: OnInit');
     this.whService.areaChartDim.subscribe((dims: any) => {
@@ -252,17 +267,11 @@ export class MapComponent implements OnInit, OnDestroy, DoCheck, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // this.buildMap();
-    console.log('MAP: AfterViewInit');
     this.addListener();
+    console.log('MAP: AfterViewInit');
   }
 
   ngDoCheck() {
-    this.counter++;
-    if (this.counter > 6 && this.counter < 7) {
-      this.onResize();
-      console.log('MAPS DoCheck:' + this.counter);
-    }
   }
 
   // ngAfterViewInit() {
@@ -315,7 +324,6 @@ export class MapComponent implements OnInit, OnDestroy, DoCheck, AfterViewInit {
 
   public addListener() {
     this.AmCharts.addListener(this.chart, 'clickMapObject', (e) => {
-      //     // Do stuff when the event happens
       const selectedWh = e.mapObject.balloonText;
       this.setSelectedWarehouse(selectedWh);
     });
@@ -324,7 +332,10 @@ export class MapComponent implements OnInit, OnDestroy, DoCheck, AfterViewInit {
   public setSelectedWarehouse(whName: string, event?) {
     this.isWhSelected = true;
     this.transformInfo();
-
+    if (this.initCounter === 0) {
+      this.view = [750, 267];
+      this.initCounter = 1;
+    }
     let selected: Warehouse;
     if (whName !== '') {
       selected = this.whService.getWarehouseByName(whName);
@@ -343,7 +354,7 @@ export class MapComponent implements OnInit, OnDestroy, DoCheck, AfterViewInit {
         'value': selected.getCapacity().used
       },
     ];
-    console.log('SELECTED' + whName.toString());
+    console.log('SELECTED: ' + whName.toString());
   }
 
   onResize() {
@@ -356,17 +367,6 @@ export class MapComponent implements OnInit, OnDestroy, DoCheck, AfterViewInit {
       console.log('DETAIL DIMENSIONS: ' + (dims.width));
     }
   }
-
-  // onResize() {
-  //   const hostElem = this.chartContainer.nativeElement;
-  //
-  //   if (hostElem.parentNode !== null) {
-  //     // Get the container dimensions
-  //     const dims = hostElem.getBoundingClientRect();
-  //     this.view = [dims.width, 300];
-  //     console.log('WH INFO: ' + (dims.width));
-  //   }
-  // }
 
   public transformInfo() {
     switch (this.infoState) {
@@ -402,30 +402,29 @@ export class MapComponent implements OnInit, OnDestroy, DoCheck, AfterViewInit {
         'width': 40,
         'height': 40,
         'balloonText': warehouse.name,
-        'zoomLevel': 1.2,
+        // 'zoomLevel': 1.2,
         'label': '',
         'selectable': true
       };
       this.config.dataProvider.images.push(wh);
     }
 
-    const truck = {
-        'svgPath': this.truck2SVG,
-        // 'color': '#7e90b1',
-        'alpha': 1,
-        'animateAlongLine': true,
-        'positionOnLine': 1,
-        'lineId': 'line1',
-        'flipDirection': false,
-        'loop': true,
-        'scale': 0.05,
-        'positionScale': 1.5,
-        'selectable': true,
-        'bringForwardOnHover': true,
-      };
-    this.config.dataProvider.images.push(truck);
+    // const truck = {
+    //     'svgPath': this.truck3SVG,
+    //     // 'color': '#7e90b1',
+    //     'alpha': 1,
+    //     'animateAlongLine': true,
+    //     'positionOnLine': 1,
+    //     'lineId': 'line1',
+    //     'flipDirection': false,
+    //     'loop': true,
+    //     'scale': 0.05,
+    //     'positionScale': 1.5,
+    //     'selectable': true,
+    //     'bringForwardOnHover': true,
+    //   };
+    // this.config.dataProvider.images.push(truck);
 
-    console.log('MAP: #Warehouses = ' + this.config.dataProvider.images.length);
     this.buildMap();
     this.addListener();
     this.isOld = true;
@@ -440,6 +439,7 @@ export class MapComponent implements OnInit, OnDestroy, DoCheck, AfterViewInit {
     this.chart = this.AmCharts.makeChart('chartdiv', this.config );
     console.log('MAP: buildMap');
   }
+
   /**
    * Creates a custom map marker - a div for container and a
    * pie chart in it

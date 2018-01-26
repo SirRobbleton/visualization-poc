@@ -1,13 +1,20 @@
   <!--<div class="table-responsive">-->
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-10 col-lg-10">
+      <div class="form-group">
+        <input placeholder="Search for Location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl">
+      </div>
+    </div>
+  </div>
   <div class="row animated slideInUp">
       <div class="col-12 col-sm-12 col-md-2 col-lg-2">
         <input #wh id="input_wh" placeholder="Warehouse ID" type="text">
       </div>
       <div class="col-6 col-sm-6 col-md-2 col-lg-2">
-        <input #lat id="input_lat" placeholder="Latitude" type="number" class="">
+        <input #lat id="input_lat" placeholder="Latitude" type="number" value={{latitude}} class="">
       </div>
       <div class="col-6 col-sm-6 col-md-2 col-lg-2">
-        <input #lon id="input_lon" placeholder="Longitude" type="number" class="">
+        <input #lon id="input_lon" placeholder="Longitude" type="number" value={{longitude}} class="">
       </div>
       <div class="col-6 col-sm-6 col-md-2 col-lg-2">
         <input #free id="input_free" placeholder="Free Space" type="number" class="">
