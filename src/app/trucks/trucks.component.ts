@@ -38,21 +38,21 @@ export class TrucksComponent implements OnInit, DoCheck {
   }
 
   ngDoCheck() {
-    this.counter++;
-    if (this.counter > 4 && this.counter < 6) {
-      this.onResize();
-      // console.log('TRUCKS DoCheck:' + this.counter);
-    }
+    // this.counter++;
+    // if (this.counter > 4 && this.counter < 6) {
+    //   this.onResize();
+    //   console.log('TRUCKS DoCheck:' + this.counter);
+    // }
   }
 
   onResize() {
-    const hostElem = this.chartContainer.nativeElement;
-
-    if (hostElem.parentNode !== null) {
-      // Get the container dimensions
-      const dims = hostElem.getBoundingClientRect();
-      this.whService.setChartColSize(dims.width - 18);
-      // console.log('TRUCK PROGRESS: ' + (dims.width));
-    }
+    // const hostElem = this.chartContainer.nativeElement;
+    //
+    // if (hostElem.parentNode !== null) {
+    //   // Get the container dimensions
+    //   const dims = hostElem.getBoundingClientRect();
+    //   this.whService.setChartColSize(dims.width - 18);
+    //   // console.log('TRUCK PROGRESS: ' + (dims.width));
+    // }
   }
 }

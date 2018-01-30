@@ -1,24 +1,25 @@
 import {
-  AfterContentChecked, AfterViewInit, Component, DoCheck, ElementRef, Input, OnInit,
+  AfterContentChecked, AfterViewChecked, AfterViewInit, Component, DoCheck, ElementRef, EventEmitter, Input, OnInit,
+  Output,
   ViewChild
 } from '@angular/core';
 import {Warehouse} from '../services/warehouse.model';
-import {WarehouseDataService} from "../services/warehouse-data.service";
+import {WarehouseDataService} from '../services/warehouse-data.service';
 
 @Component({
   selector: 'app-warehouse',
   templateUrl: './warehouse.component.html',
   styleUrls: ['./warehouse.component.scss']
 })
-export class WarehouseComponent implements OnInit, DoCheck {
+export class WarehouseComponent implements OnInit, DoCheck, AfterViewInit, AfterContentChecked, AfterViewChecked {
 
   @Input('warehouse') public warehouse: Warehouse;
-  @Input('chartSize') public chartSize: any[];
+  @Output() barIsLoaded: EventEmitter<boolean> = new EventEmitter();
 
   whData: any[];
   //
   // options
-  view: any[] = [];
+  view: any[] = [400, 100];
   showXAxis = false;
   showYAxis = false;
   gradient = false;
@@ -32,26 +33,40 @@ export class WarehouseComponent implements OnInit, DoCheck {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
   };
 
+  public counter = 0;
+
   constructor(private whService: WarehouseDataService) {
-    console.log('Warehouse Constructor');
+    console.log('WH: Constructor');
   }
 
   ngOnInit() {
     this.whData = this.createChartData();
-    console.log('OnInit Warehouse');
+    console.log('WH: OnInit');
     this.whService.chartColumnSize.subscribe((size: number) => {
       if (size !== this.view[0]) {
         this.view = [size, 50];
+        console.log('WH size: ' + size);
       }
     });
   }
 
+  ngAfterViewInit() {
+    // this.barIsLoaded.emit(true);
+    console.log('WH: AfterViewInit');
+  }
+
+  ngAfterViewChecked() {
+    this.counter++;
+  }
+
+  ngAfterContentChecked() {
+    if (this.counter > 2 && this.counter < 4) {
+      this.barIsLoaded.emit(true);
+      console.log('WH: AfterView Checked');
+    }
+  }
+
   ngDoCheck() {
-    // this.whService.chartColumnSize.subscribe((size: number) => {
-    //   if (size !== this.view[0]) {
-    //     this.view = [size, 50];
-    //   }
-    // });
   }
 
   public createChartData() {

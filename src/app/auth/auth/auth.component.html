@@ -6,10 +6,10 @@
       <form [formGroup]="radioGroupForm">
         <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" formControlName="model">
           <label ngbButtonLabel class="btn btn-primary primary-color-dark">
-            <input (click)="toggleAuth()" ngbButton type="radio" value="login"> Login
+            <input (click)="toggleAuth('login')" ngbButton type="radio" value="login"> Login
           </label>
           <label ngbButtonLabel class="btn btn-primary primary-color-dark">
-            <input (click)="toggleAuth()" ngbButton type="radio" value="signUp"> Sign Up
+            <input (click)="toggleAuth('register')" ngbButton type="radio" value="signUp"> Sign Up
           </label>
         </div>
       </form>

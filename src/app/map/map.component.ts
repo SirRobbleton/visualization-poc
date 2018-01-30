@@ -74,6 +74,7 @@ export class MapComponent implements OnInit, OnDestroy, DoCheck, AfterViewInit {
   };
   public view = [];
   public gradient = false;
+  public label = 'Total (sqft)';
 
   public config = {
     'type': 'map',
@@ -84,9 +85,9 @@ export class MapComponent implements OnInit, OnDestroy, DoCheck, AfterViewInit {
       'alpha': 0.4
     },
     'imagesSettings': {
-      // 'color': '#153094',
+      'color': '#153094',
       'rollOverColor': '#142069',
-      // 'selectedColor': '#142069',
+      'selectedColor': '#142069',
       'selectedScale': 1.2,
       'pauseDuration': 0.2,
       'animationDuration': 100,
@@ -181,46 +182,6 @@ export class MapComponent implements OnInit, OnDestroy, DoCheck, AfterViewInit {
         //     'valueField': 'value',
         //     'titleField': 'category'
         //   }
-        // },
-        // {
-        //   'latitude': 1.32,
-        //   'longitude': 103.68,
-        //   'imageURL': 'http://pluspng.com/img-png/warehouse-group-vector-png--700.png',
-        //   'width': 50,
-        //   'height': 50,
-        //   'zoomLevel': 3
-        //   // 'label': 'Warehouse A'
-        // },
-        // {
-        //   'title': '',
-        //   'latitude': 1.43,
-        //   'longitude': 103.74,
-        //   'width': 140,
-        //   'height': 70,
-        //   'pie': {
-        //     'type': 'pie',
-        //     'pullOutRadius': 10,
-        //     'labelRadius': 0,
-        //     'dataProvider': [{
-        //       'category': 'Free',
-        //       'value': 1200
-        //     }, {
-        //       'category': 'Used',
-        //       'value': 500
-        //     }],
-        //     'labelText': '',
-        //     'valueField': 'value',
-        //     'titleField': 'category'
-        //   }
-        // },
-        // {
-        //   'latitude': 1.41,
-        //   'longitude': 103.72,
-        //   'imageURL': 'http://pluspng.com/img-png/warehouse-group-vector-png--700.png',
-        //   'width': 50,
-        //   'height': 50,
-        //   'zoomLevel': 3
-        //   // 'label': 'Warehouse A'
         // }
       ]
     }

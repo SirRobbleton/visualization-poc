@@ -1,4 +1,5 @@
 import {
+  AfterContentChecked,
   AfterContentInit, AfterViewChecked, AfterViewInit, Component, DoCheck, EventEmitter, Input, OnInit, Output,
   ViewEncapsulation
 } from '@angular/core';
@@ -20,10 +21,10 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
     }
   `]
 })
-export class WarehouseDetailsComponent implements OnInit, AfterViewChecked, AfterViewInit, AfterContentInit {
+export class WarehouseDetailsComponent implements OnInit, AfterViewChecked, AfterViewInit, AfterContentChecked, AfterContentInit {
 
   @Input() warehouse: Warehouse;
-  @Output() whDetailsLoaded = new EventEmitter();
+  @Output('whDetailsLoaded') whDetailsLoaded: EventEmitter<boolean> = new EventEmitter();
 
   public counter = 0;
 
@@ -39,15 +40,18 @@ export class WarehouseDetailsComponent implements OnInit, AfterViewChecked, Afte
   }
 
   ngAfterViewChecked() {
-    // ++this.counter;
-    // console.log('WH DETAILS: AfterViewChecked ' + this.counter);
-    // if (this.counter > 30 && this.counter < 35) {
-    //   this.whDetailsLoaded.emit('loaded');
-    // }
+    this.counter++;
   }
 
   ngAfterContentInit() {
     console.log('WH DETAILS: AfterContentInit');
+  }
+
+  ngAfterContentChecked() {
+    if (this.counter > 3 && this.counter < 5) {
+      this.whDetailsLoaded.emit(true);
+      console.log('WH: AfterView Checked');
+    }
   }
 
   open(content) {

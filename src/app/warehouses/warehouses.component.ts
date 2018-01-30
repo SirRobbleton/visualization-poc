@@ -2,7 +2,7 @@ import {Component, DoCheck, ElementRef, EventEmitter, NgZone, OnInit, Output, Vi
 import {Warehouse} from '../services/warehouse.model';
 import {WarehouseDataService} from '../services/warehouse-data.service';
 import {MapsAPILoader} from '@agm/core';
-import {FormControl} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {Address} from '../services/address.model';
 
 @Component({
@@ -14,6 +14,10 @@ export class WarehousesComponent implements OnInit, DoCheck {
   @Output() newWarehouse: EventEmitter<string> = new EventEmitter();
   @Output() selectedWarehouse = new EventEmitter();
   @ViewChild('search') public searchElementRef: ElementRef;
+  @ViewChild('capacityCol') public capacityElementRef: ElementRef;
+
+  public radioGroupForm: FormGroup;
+  public selectedView = 'registerWarehouse';
 
   public address: Address;
   public latitude: number;
@@ -24,11 +28,19 @@ export class WarehousesComponent implements OnInit, DoCheck {
 
   constructor(private whService: WarehouseDataService,
               private mapsAPILoader: MapsAPILoader,
-              private ngZone: NgZone) {
+              private ngZone: NgZone,
+              private formBuilder: FormBuilder) {
     this.warehouses = this.whService.getWarehouses();
+    // console.log('WAREHOUSES: Constructor');
   }
 
   ngOnInit() {
+    // console.log('WAREHOUSES: OnInit');
+
+    this.radioGroupForm = this.formBuilder.group({
+      'model': 'registerWarehouse'
+    });
+
     this.searchControl = new FormControl();
 
     this.mapsAPILoader.load().then(() => {
@@ -85,7 +97,8 @@ export class WarehousesComponent implements OnInit, DoCheck {
     });
   }
 
-  ngDoCheck() {}
+  ngDoCheck() {
+  }
 
   addNewWarehouse(wh: string, lat: number, lon: number, free: number, used: number) {
     const newWh: Warehouse = new Warehouse(lat, lon, '', wh, free, used, this.address);
@@ -97,5 +110,36 @@ export class WarehousesComponent implements OnInit, DoCheck {
     this.selectedWarehouse.emit({
         warehouse: warehouse.name
       });
+  }
+
+  toggleView(view: string) {
+    switch (view) {
+      case 'register': {
+        this.selectedView = 'registerWarehouse';
+        break;
+      }
+      case 'warehouses': {
+        this.selectedView = 'warehouseList';
+        break;
+      }
+      case 'trucks': {
+        this.selectedView = 'truckList';
+        break;
+      }
+      default: {
+          this.selectedView = 'registerWarehouse';
+          break;
+        }
+      }
+    }
+
+  onResize(event) {
+      const hostElem = this.capacityElementRef.nativeElement;
+      if (hostElem.parentNode !== null) {
+        // Get the container dimensions
+        const dims = hostElem.getBoundingClientRect();
+        this.whService.setChartColSize(2 * dims.width - 18);
+        console.log('WAREHOUSES onResize: ' + (2 * dims.width - 18));
+      }
   }
 }

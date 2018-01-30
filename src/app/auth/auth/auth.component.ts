@@ -18,8 +18,8 @@ export class AuthComponent implements OnInit {
     });
   }
 
-  public toggleAuth() {
-    this.authView === 'login' ? this.authView = 'signUp' : this.authView = 'login';
+  public toggleAuth(view: string) {
+    view === 'login' ? this.authView = 'login' : this.authView = 'signUp';
   }
 
 }

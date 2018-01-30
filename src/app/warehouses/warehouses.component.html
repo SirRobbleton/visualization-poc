@@ -1,68 +1,88 @@
-  <!--<div class="table-responsive">-->
-  <div class="row">
+<div class="row">
+  <div class="col-1 col-sm-2 col-md-4 col-lg-4">
+  </div>
+  <div class="col-10 col-sm-8 col-md-4 col-lg-4">
+    <form [formGroup]="radioGroupForm">
+      <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" formControlName="model">
+        <label ngbButtonLabel class="btn btn-primary primary-color-dark">
+          <input (click)="toggleView('register')" ngbButton type="radio" value="registerWarehouse"> Register Warehouse
+        </label>
+        <label ngbButtonLabel class="btn btn-primary primary-color-dark">
+          <input (click)="toggleView('warehouses')" ngbButton type="radio" value="warehouseList"> Warehouses
+        </label>
+        <label ngbButtonLabel class="btn btn-primary primary-color-dark">
+          <input (click)="toggleView('trucks')" ngbButton type="radio" value="truckList"> Deliveries
+        </label>
+      </div>
+    </form>
+  </div>
+  <div class="col-1 col-sm-2 col-md-4 col-lg-4">
+  </div>
+</div>
+<br><br>
+<div *ngIf="selectedView === 'registerWarehouse'">
+  <div class="row animated fadeIn">
     <div class="col-12 col-sm-12 col-md-10 col-lg-10">
       <div class="form-group">
-        <input placeholder="Search for Location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl">
+        <input #search  placeholder="Search for Location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" [formControl]="searchControl">
       </div>
     </div>
   </div>
-  <div class="row animated slideInUp">
-      <div class="col-12 col-sm-12 col-md-2 col-lg-2">
-        <input #wh id="input_wh" placeholder="Warehouse ID" type="text">
-      </div>
-      <div class="col-6 col-sm-6 col-md-2 col-lg-2">
-        <input #lat id="input_lat" placeholder="Latitude" type="number" value={{latitude}} class="">
-      </div>
-      <div class="col-6 col-sm-6 col-md-2 col-lg-2">
-        <input #lon id="input_lon" placeholder="Longitude" type="number" value={{longitude}} class="">
-      </div>
-      <div class="col-6 col-sm-6 col-md-2 col-lg-2">
-        <input #free id="input_free" placeholder="Free Space" type="number" class="">
-      </div>
-      <div class="col-6 col-sm-6 col-md-2 col-lg-2">
-        <input #used id="input_used" placeholder="Used Space" type="number" class="">
-      </div>
-      <div class="col-12 col-sm-12 col-md-2 col-lg-2">
-        <input id="addWarehouse"
-               class="btn primary-color-dark"
-               value="Add Warehouse"
-               type="submit"
-               (click)="addNewWarehouse(wh.value, lat.value, lon.value, free.value, used.value)">
-      </div>
+  <div class="row animated fadeIn">
+    <div class="col-12 col-sm-12 col-md-2 col-lg-2">
+      <input #wh id="input_wh" placeholder="Warehouse ID" type="text">
     </div>
-  <br>
-  <br>
-  <br>
-    <div class="row animated slideInUp">
-      <table class="table" id="warehouses">
-        <thead>
-        <tr>
-          <th id="warehouse" class="primary-color-dark">Warehouse</th>
-          <th id="location" class="primary-color-dark">Location</th>
-          <th id="capacity" class="primary-color-dark">Capacity</th>
-          <th id="partition" class="primary-color-dark">Partitioning</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let warehouse of warehouses" (click)="rowSelected(warehouse)">
-          <td>{{warehouse.name}}</td>
-          <td>{{warehouse.lat}} , {{warehouse.lon}}</td>
-          <td>{{warehouse.getCapacity().total}}</td>
-          <td>
-            <app-warehouse [warehouse]="warehouse"></app-warehouse>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+    <div class="col-6 col-sm-6 col-md-2 col-lg-2">
+      <input #lat id="input_lat" placeholder="Latitude" type="number" value={{latitude}} class="">
+    </div>
+    <div class="col-6 col-sm-6 col-md-2 col-lg-2">
+      <input #lon id="input_lon" placeholder="Longitude" type="number" value={{longitude}} class="">
+    </div>
+    <div class="col-6 col-sm-6 col-md-2 col-lg-2">
+      <input #free id="input_free" placeholder="Free Space" type="number" class="">
+    </div>
+    <div class="col-6 col-sm-6 col-md-2 col-lg-2">
+      <input #used id="input_used" placeholder="Used Space" type="number" class="">
+    </div>
+    <div class="col-12 col-sm-12 col-md-2 col-lg-2">
+      <input id="addWarehouse"
+             class="btn primary-color-dark"
+             value="Add Warehouse"
+             type="submit"
+             (click)="addNewWarehouse(wh.value, lat.value, lon.value, free.value, used.value)">
+    </div>
   </div>
-  <!--<div class="row">-->
-    <!--<div class="table col-xs-12 col-sm-12 col-md-12 col-lg-12">-->
-      <!--<app-truck #warehouseComponent-->
-                     <!--[truck]="truck"-->
-                     <!--[chartSize]="chartSize"></app-truck>-->
-    <!--</div>-->
-  <!--</div>-->
-  <!--</div>-->
-
-<!--<app-truck *ngFor="let truck of warehouses"-->
-               <!--[truck]="truck"></app-truck>-->
+</div>
+<div *ngIf="selectedView === 'warehouseList'">
+  <div class="row animated fadeIn">
+    <table class="table" id="warehouses">
+      <thead>
+      <tr>
+        <th id="warehouse" class="primary-color-dark">Warehouse</th>
+        <th id="location" class="primary-color-dark">Location</th>
+        <th #capacityCol id="capacity" class="primary-color-dark"
+            (window:resize)="onResize($event)">Capacity</th>
+        <th id="partition" class="primary-color-dark">Partitioning</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let warehouse of warehouses" (click)="rowSelected(warehouse)">
+        <td>{{warehouse.name}}</td>
+        <td>{{warehouse.lat}} , {{warehouse.lon}}</td>
+        <td>{{warehouse.getCapacity().total}}</td>
+        <td>
+          <app-warehouse (barIsLoaded)="onResize()" [barSize]="barColWidth" [warehouse]="warehouse"></app-warehouse>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div *ngIf="selectedView === 'truckList'">
+  <div class="row animated fadeIn">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <app-trucks></app-trucks>
+    </div>
+  </div>
+</div>
+<br>

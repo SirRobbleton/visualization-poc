@@ -2,7 +2,7 @@ import {EventEmitter, Injectable} from '@angular/core';
 import {Warehouse} from './warehouse.model';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {DatabaseService} from './database.service';
-import {Address} from "./address.model";
+import {Address} from './address.model';
 
 @Injectable()
 export class WarehouseDataService {
@@ -12,17 +12,6 @@ export class WarehouseDataService {
   public finishedLoading = new BehaviorSubject<boolean>(false);
 
   constructor(private dbService: DatabaseService) {
-    // const wh1 = new Warehouse(1.32, 103.79, '', 'Warehouse 1', 30, 20);
-    // const wh2 = new Warehouse(1.32, 103.68, '', 'Warehouse 2', 40, 100);
-    // const wh3 = new Warehouse(1.41, 103.72, '', 'Warehouse 3', 60, 40);
-    // const wh4 = new Warehouse(1.34, 103.82, '', 'Warehouse 4', 100, 50);
-    //
-    // this.warehouses.push(wh1);
-    // this.warehouses.push(wh2);
-    // this.warehouses.push(wh3);
-    // this.warehouses.push(wh4);
-    // const status = this.getFromDatabase();
-    // console.log('WH SERVICE: Constructor ' + status + this.warehouses.length);
   }
 
   public getWarehouses() {
@@ -73,7 +62,9 @@ export class WarehouseDataService {
             for (const warehouse of warehouses) {
               const adr = warehouse.address;
               const address = new Address(adr._city, adr._streetNumber, adr._route, adr._country, adr._postalCode);
-              const wh = new Warehouse(warehouse.lat, warehouse.lon, '',
+              const formattedLon = this.precisionRound(warehouse.lon, 4);
+              const formattedLat = this.precisionRound(warehouse.lat, 4);
+              const wh = new Warehouse(formattedLat, formattedLon, '',
                 warehouse.name, warehouse.freeAbsolute,
                 warehouse.usedAbsolute, address);
               this.warehouses.push(wh);
@@ -85,5 +76,10 @@ export class WarehouseDataService {
         },
         (error) => console.log(error)
       );
+  }
+
+  precisionRound(number, precision) {
+    const factor = Math.pow(10, precision);
+    return Math.round(number * factor) / factor;
   }
 }

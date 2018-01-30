@@ -41,6 +41,7 @@ import {AuthService} from './services/auth.service';
 import { LoginComponent } from './auth/login/login.component';
 import { AuthComponent } from './auth/auth/auth.component';
 import {AgmCoreModule} from '@agm/core';
+import { WarehouseDetailsPieComponent } from './warehouse-details-pie/warehouse-details-pie.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import {AgmCoreModule} from '@agm/core';
     SignupComponent,
     LoginComponent,
     AuthComponent,
+    WarehouseDetailsPieComponent,
   ],
   imports: [
     BrowserModule,
