@@ -1,7 +1,6 @@
 import {
   AfterContentChecked, AfterViewChecked, AfterViewInit, Component, DoCheck, ElementRef, EventEmitter, Input, OnInit,
-  Output,
-  ViewChild
+  Output, ViewChild
 } from '@angular/core';
 import {Warehouse} from '../services/warehouse.model';
 import {WarehouseDataService} from '../services/warehouse-data.service';
@@ -51,7 +50,6 @@ export class WarehouseComponent implements OnInit, DoCheck, AfterViewInit, After
   }
 
   ngAfterViewInit() {
-    // this.barIsLoaded.emit(true);
     console.log('WH: AfterViewInit');
   }
 
@@ -60,7 +58,7 @@ export class WarehouseComponent implements OnInit, DoCheck, AfterViewInit, After
   }
 
   ngAfterContentChecked() {
-    if (this.counter > 2 && this.counter < 4) {
+    if (this.counter > 20 && this.counter < 22) {
       this.barIsLoaded.emit(true);
       console.log('WH: AfterView Checked');
     }

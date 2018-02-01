@@ -1,4 +1,4 @@
-import {EventEmitter, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Warehouse} from './warehouse.model';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {DatabaseService} from './database.service';
@@ -6,8 +6,8 @@ import {Address} from './address.model';
 
 @Injectable()
 export class WarehouseDataService {
-  public chartColumnSize = new BehaviorSubject<number>(10);
-  public areaChartDim = new BehaviorSubject<any>({});
+  public chartColumnSize = new BehaviorSubject<number>(100);
+  public pieColumnSize = new BehaviorSubject<any>({});
   public warehouses: Warehouse[] = [];
   public finishedLoading = new BehaviorSubject<boolean>(false);
 
@@ -29,12 +29,12 @@ export class WarehouseDataService {
     this.chartColumnSize.next(width);
   }
 
-  public setAreaChartDim(width: number, height: number) {
+  public setPieChartColSize(width: number, height: number) {
     const dims = {
       'width': width,
       'height': height
     };
-    this.areaChartDim.next(dims);
+    this.pieColumnSize.next(dims);
   }
 
   public addWarehouse(wh: Warehouse) {
@@ -78,7 +78,7 @@ export class WarehouseDataService {
       );
   }
 
-  precisionRound(number, precision) {
+  public precisionRound(number, precision) {
     const factor = Math.pow(10, precision);
     return Math.round(number * factor) / factor;
   }

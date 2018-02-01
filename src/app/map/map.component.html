@@ -1,38 +1,32 @@
 <div class="container">
-    <div class="row">
-      <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-        <div class="animated slideInDown" id="chartdiv" [style.width.%]="100" [style.height.px]="400"></div>
+  <div #mapContainer [ngClass]="{'col-lg-6': isWhSelected, 'col-lg-12': !isWhSelected}"
+       class="col-12 col-sm-12 col-md-12">
+    <div class="animated slideInDown" id="chartdiv" [style.width.%]="100" [style.height.px]="420"></div>
+  </div>
+  <div *ngIf="isWhSelected">
+    <div [@infoState]="infoState" id="whInfo" class="alert col-12 col-sm-12 col-md-12 col-lg-6">
+      <div #detailContainer class="col-12 col-sm-12 col-md-6 col-lg-12"
+           (window:resize)="onResize()">
+        <app-warehouse-details (whDetailsLoaded)="onResize()" [warehouse]="selectedWh"></app-warehouse-details>
+      </div>
+      <div #chartContainer class="col-12 col-sm-12 col-md-6 col-lg-12">
+        <app-warehouse-details-pie
+          [style.width.%]="100"
+          [label]="label"
+          [view]="view"
+          [scheme]="colorScheme"
+          [results]="results"
+          [gradient]="gradient">
+        </app-warehouse-details-pie>
       </div>
     </div>
   </div>
-  <br>
-  <div *ngIf="isWhSelected" class="container">
+</div>
+<br>
+<div class="container">
     <div class="row">
-      <div [@infoState]="infoState" id="whInfo" class="alert col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div class="col-12 col-sm-6 col-md-6 col-lg-6"
-             (window:resize)="onResize()"
-             #detailContainer>
-          <app-warehouse-details (whDetailsLoaded)="onResize()" [warehouse]="selectedWh"></app-warehouse-details>
-        </div>
-        <div #chartContainer
-             class="col-12 col-sm-6 col-md-6 col-lg-6">
-          <ngx-charts-advanced-pie-chart
-            [label]="label"
-            [view]="view"
-            [scheme]="colorScheme"
-            [results]="results"
-            [gradient]="gradient">
-          </ngx-charts-advanced-pie-chart>
-        </div>
-      </div>
-    </div>
-  </div>
-  <br>
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="animated slideInUp col-12 col-sm-12 col-md-12 col-lg-12">
         <app-warehouses (selectedWarehouse)="setSelectedWarehouse('', $event)" (newWarehouse)="refreshWarehouses()"></app-warehouses>
       </div>
     </div>
-  </div>
-<br>
+</div>

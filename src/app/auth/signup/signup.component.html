@@ -1,17 +1,25 @@
-<div class="container">
   <div class="row">
-    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-      <form (ngSubmit)="onSignUp(f)" #f="ngForm">
+      <form class="col-12 col-sm-12 col-md-12 col-lg-12" (ngSubmit)="onSignUp(f)" #f="ngForm">
         <div class="form-group">
-          <!--<label for="email">eMail</label>-->
           <input placeholder="Mail" class="form-control" type="email" id="email" name="email" ngModel>
         </div>
         <div class="form-group">
-          <!--<label for="password">Password</label>-->
           <input placeholder="Password" class="form-control" type="password" id="password" name="password" ngModel>
         </div>
-        <button class="button btn-primary primary-color-dark">Sign Up</button>
+        <button class="button btn primary-color-dark"
+                value="SignUp"
+                type="submit">Register</button>
       </form>
+  </div>
+  <div class="row">
+    <div *ngIf="registrySuccessful" class="animated pulse col-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="alert alert-success">
+        <strong>Success: </strong> Registration was successful.
+      </div>
+    </div>
+    <div *ngIf="errorMsg !== ''" class="animated flash col-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="alert alert-danger">
+        <strong>Error: </strong> {{errorMsg}}
+      </div>
     </div>
   </div>
-</div>

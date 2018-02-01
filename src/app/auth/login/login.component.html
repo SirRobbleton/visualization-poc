@@ -1,18 +1,15 @@
-<div class="container">
   <div class="row">
-    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-      <form (ngSubmit)="onLogin(f)" #f="ngForm">
+      <form class="col-12 col-sm-12 col-md-12 col-lg-12" (ngSubmit)="onLogin(f)" #f="ngForm">
         <div class="form-group">
-          <!--<label for="email">eMail</label>-->
           <input #email placeholder="Mail" class="form-control" type="email" id="log_email" name="email" ngModel>
         </div>
         <div class="form-group">
-          <!--<label for="password">Password</label>-->
           <input #pw placeholder="Password" class="form-control" type="password" id="log_password" name="password" ngModel>
         </div>
-        <button class="button btn-primary primary-color-dark">Login</button>
+        <button class="button btn primary-color-dark"
+                value="Login"
+                type="submit">Login</button>
       </form>
-    </div>
   </div>
   <br>
   <div class="row">
@@ -27,4 +24,3 @@
       </div>
     </div>
   </div>
-</div>

@@ -42,7 +42,10 @@ export class WarehousesComponent implements OnInit, DoCheck {
     });
 
     this.searchControl = new FormControl();
+    this.setUpGoogleSearch();
+  }
 
+  setUpGoogleSearch() {
     this.mapsAPILoader.load().then(() => {
       const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
         types: ['address']
@@ -95,6 +98,7 @@ export class WarehousesComponent implements OnInit, DoCheck {
         });
       });
     });
+
   }
 
   ngDoCheck() {
@@ -115,7 +119,11 @@ export class WarehousesComponent implements OnInit, DoCheck {
   toggleView(view: string) {
     switch (view) {
       case 'register': {
+        console.log('WAREHOUSES: Register Toggle');
         this.selectedView = 'registerWarehouse';
+        setTimeout(() => {
+          this.setUpGoogleSearch();
+          }, 500);
         break;
       }
       case 'warehouses': {

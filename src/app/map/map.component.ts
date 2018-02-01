@@ -49,6 +49,7 @@ import {Router} from '@angular/router';
 export class MapComponent implements OnInit, OnDestroy, DoCheck, AfterViewInit {
   @ViewChild('chartContainer') chartContainer: ElementRef;
   @ViewChild('detailContainer') detailContainer: ElementRef;
+  @ViewChild('mapContainer') mapContainer: ElementRef;
 
   public isLoggedIn;
 
@@ -88,7 +89,8 @@ export class MapComponent implements OnInit, OnDestroy, DoCheck, AfterViewInit {
       'color': '#153094',
       'rollOverColor': '#142069',
       'selectedColor': '#142069',
-      'selectedScale': 1.2,
+      'selectedScale': 1.4,
+      'rollOverScale': 1.2,
       'pauseDuration': 0.2,
       'animationDuration': 100,
       'adjustAnimationSpeed': true,
@@ -192,13 +194,6 @@ export class MapComponent implements OnInit, OnDestroy, DoCheck, AfterViewInit {
               private whService: WarehouseDataService,
               private authService: AuthService) {
     console.log('MAP: Constructor');
-    // this.whService.finishedLoading.subscribe((value: boolean) => {
-    //   if (value) {
-    //     this.isDataLoaded = true;
-    //     this.refreshWarehouses();
-    //   }
-    // });
-    // this.whService.getFromDatabase();
   }
 
   ngOnInit() {
@@ -216,15 +211,15 @@ export class MapComponent implements OnInit, OnDestroy, DoCheck, AfterViewInit {
     );
     this.refreshWarehouses();
     console.log('MAP: OnInit');
-    this.whService.areaChartDim.subscribe((dims: any) => {
-      if (dims.width !== this.view[0]) {
-        if (dims.width < 335) {
-          this.view = [dims.width, dims.height];
-        } else {
-          this.view = [dims.width + dims.width * 0.5, dims.height];
-        }
-      }
-    });
+    // this.whService.pieColumnSize.subscribe((dims: any) => {
+    //   if (dims.width !== this.view[0]) {
+    //     if (dims.width < 335) {
+    //       this.view = [dims.width, dims.height];
+    //     } else {
+    //       this.view = [dims.width + dims.width * 0.5, dims.height];
+    //     }
+    //   }
+    // });
   }
 
   ngAfterViewInit() {
@@ -294,7 +289,7 @@ export class MapComponent implements OnInit, OnDestroy, DoCheck, AfterViewInit {
     this.isWhSelected = true;
     this.transformInfo();
     if (this.initCounter === 0) {
-      this.view = [750, 267];
+      this.view = [0, 0];
       this.initCounter = 1;
     }
     let selected: Warehouse;
@@ -302,7 +297,7 @@ export class MapComponent implements OnInit, OnDestroy, DoCheck, AfterViewInit {
       selected = this.whService.getWarehouseByName(whName);
     } else {
       selected = this.whService.getWarehouseByName(event.warehouse);
-      console.log('EVENT: ' + event.warehouse);
+      // console.log('EVENT: ' + event.warehouse);
     }
     this.selectedWh = selected;
     this.results = [
@@ -315,17 +310,23 @@ export class MapComponent implements OnInit, OnDestroy, DoCheck, AfterViewInit {
         'value': selected.getCapacity().used
       },
     ];
-    console.log('SELECTED: ' + whName.toString());
+    // console.log('SELECTED: ' + whName.toString());
   }
 
   onResize() {
-    const hostElem = this.detailContainer.nativeElement;
+    const detailElem = this.detailContainer.nativeElement;
+    const mapElem = this.mapContainer.nativeElement;
 
-    if (hostElem.parentNode !== null) {
+    if (detailElem.parentNode !== null) {
       // Get the container dimensions
-      const dims = hostElem.getBoundingClientRect();
-      this.whService.setAreaChartDim(dims.width, dims.height);
-      console.log('DETAIL DIMENSIONS: ' + (dims.width));
+      const dims = detailElem.getBoundingClientRect();
+      const mapDims = mapElem.getBoundingClientRect();
+      if (mapDims.width > 10) {
+        this.whService.setPieChartColSize(dims.width, dims.height);
+      } else {
+        this.whService.setPieChartColSize(dims.width, dims.height);
+      }
+      console.log('DETAIL DIMENSIONS: ' + dims.width + ', ' + dims.height);
     }
   }
 
@@ -344,7 +345,7 @@ export class MapComponent implements OnInit, OnDestroy, DoCheck, AfterViewInit {
         break;
       }
     }
-    console.log('Infostate: ' + this.infoState);
+    // console.log('Infostate: ' + this.infoState);
   }
 
   public refreshWarehouses() {
@@ -359,7 +360,7 @@ export class MapComponent implements OnInit, OnDestroy, DoCheck, AfterViewInit {
         'longitude': warehouse.lon,
         'imageURL': 'https://www.shareicon.net/data/128x128/2016/09/02/824673_storage_512x512.png',
         // 'svgPath': this.warehouseSVG,
-        // 'scale': 1,
+        'scale': 0.8,
         'width': 40,
         'height': 40,
         'balloonText': warehouse.name,

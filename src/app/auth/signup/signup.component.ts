@@ -9,6 +9,9 @@ import {AuthService} from '../../services/auth.service';
 })
 export class SignupComponent implements OnInit {
 
+  public registrySuccessful: boolean;
+  public errorMsg = '';
+
   constructor(private authService: AuthService) { }
 
   ngOnInit() {

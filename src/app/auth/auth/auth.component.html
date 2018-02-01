@@ -1,24 +1,30 @@
 <div class="container">
   <div class="row">
-    <div class="col-4 col-sm-4 col-md-4 col-lg-4">
+    <div class="col-2 col-sm-3 col-md-4 col-lg-4">
     </div>
-    <div class="col-4 col-sm-4 col-md-4 col-lg-4">
+    <div class="col-8 col-sm-6 col-md-4 col-lg-4">
       <form [formGroup]="radioGroupForm">
         <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" formControlName="model">
-          <label ngbButtonLabel class="btn btn-primary primary-color-dark">
-            <input (click)="toggleAuth('login')" ngbButton type="radio" value="login"> Login
+          <label ngbButtonLabel class="col-6 btn btn-primary primary-color-dark">
+            <input (click)="toggleAuth('login')" ngbButton type="radio" value="login">
+            <i class="fa fa-sign-in fa-5x" aria-hidden="true"></i>
+            <br><br>
+            Sign In
           </label>
-          <label ngbButtonLabel class="btn btn-primary primary-color-dark">
-            <input (click)="toggleAuth('register')" ngbButton type="radio" value="signUp"> Sign Up
+          <label ngbButtonLabel class="col-6 btn btn-primary primary-color-dark">
+            <input (click)="toggleAuth('register')" ngbButton type="radio" value="signUp">
+            <i class="fa fa-user-plus fa-5x" aria-hidden="true"></i>
+            <br><br>
+            Sign Up
           </label>
         </div>
       </form>
     </div>
-    <div class="col-4 col-sm-4 col-md-4 col-lg-4">
+    <div class="col-2 col-sm-3 col-md-4 col-lg-4">
     </div>
   </div>
   <div class="row">
-    <app-login *ngIf="authView === 'login'" class="animated fadeInDown"></app-login>
-    <app-signup *ngIf="authView === 'signUp'" class="animated fadeInDown"></app-signup>
+      <app-login *ngIf="authView === 'login'" class="animated fadeInDown col-12 col-sm-12 col-md-12 col-lg-12"></app-login>
+      <app-signup *ngIf="authView === 'signUp'" class="animated fadeInDown col-12 col-sm-12 col-md-12 col-lg-12"></app-signup>
   </div>
 </div>

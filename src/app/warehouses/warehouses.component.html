@@ -1,22 +1,31 @@
 <div class="row">
-  <div class="col-1 col-sm-2 col-md-4 col-lg-4">
+  <div class="col-sm-2 col-md-3 col-lg-4">
   </div>
-  <div class="col-10 col-sm-8 col-md-4 col-lg-4">
+  <div class="col-12 col-sm-8 col-md-6 col-lg-4">
     <form [formGroup]="radioGroupForm">
       <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" formControlName="model">
-        <label ngbButtonLabel class="btn btn-primary primary-color-dark">
-          <input (click)="toggleView('register')" ngbButton type="radio" value="registerWarehouse"> Register Warehouse
+        <label ngbButtonLabel class="col-4 btn btn-primary primary-color-dark">
+          <input (click)="toggleView('register')" ngbButton type="radio" value="registerWarehouse">
+          <i class="fa fa-plus-square fa-5x" aria-hidden="true"></i>
+          <br><br>
+          Register Warehouse
         </label>
-        <label ngbButtonLabel class="btn btn-primary primary-color-dark">
-          <input (click)="toggleView('warehouses')" ngbButton type="radio" value="warehouseList"> Warehouses
+        <label ngbButtonLabel class="col-4 btn btn-primary primary-color-dark">
+          <input (click)="toggleView('warehouses')" ngbButton type="radio" value="warehouseList">
+          <i class="fa fa-industry fa-3x" aria-hidden="true"></i>
+          <br><br>
+          Warehouses
         </label>
-        <label ngbButtonLabel class="btn btn-primary primary-color-dark">
-          <input (click)="toggleView('trucks')" ngbButton type="radio" value="truckList"> Deliveries
+        <label ngbButtonLabel class="col-4 btn btn-primary primary-color-dark">
+          <input (click)="toggleView('trucks')" ngbButton type="radio" value="truckList">
+          <i class="fa fa-truck fa-lg" aria-hidden="true"></i>
+          <br><br>
+          Deliveries
         </label>
       </div>
     </form>
   </div>
-  <div class="col-1 col-sm-2 col-md-4 col-lg-4">
+  <div class="col-sm-2 col-md-3 col-lg-4">
   </div>
 </div>
 <br><br>
