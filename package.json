@@ -30,6 +30,7 @@
     "amcharts3": "^3.21.12",
     "amcharts3-angular2": "^1.2.1",
     "ammap3": "^3.21.12",
+    "angular-4-data-table": "^0.4.3",
     "angular-bootstrap-md": "^4.2.4",
     "angular-font-awesome": "^3.1.2",
     "angular-tek-progress-bar": "^0.2.1",
@@ -45,6 +46,7 @@
     "mdbootstrap": "^4.4.4",
     "ngx-perfect-scrollbar": "^4.3.1",
     "rxjs": "^5.4.2",
+    "tablesorter": "^2.29.5",
     "underscore": "^1.8.3",
     "vis": "^4.21.0",
     "zone.js": "^0.8.14"

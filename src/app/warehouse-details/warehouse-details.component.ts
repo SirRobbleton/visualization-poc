@@ -42,7 +42,6 @@ export class WarehouseDetailsComponent implements OnInit, AfterViewChecked, Afte
   @HostListener('window:resize', ['$event'])
   onResize(event?) {
     this.innerWidth = window.innerWidth;
-    console.log(this.innerWidth);
   }
 
   ngAfterViewInit() {

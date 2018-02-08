@@ -5,7 +5,8 @@ import * as jp from 'jsonpath';
 import * as colors from './services/colors';
 
 import {TestData} from './services/data.model';
-import {WarehouseDataService} from "./services/warehouse-data.service";
+import {WarehouseDataService} from './services/warehouse-data.service';
+import {DataService} from './services/data.service';
 
 @Component({
   selector: 'app-root',
@@ -17,10 +18,17 @@ import {WarehouseDataService} from "./services/warehouse-data.service";
 })
 export class AppComponent implements OnInit, AfterViewInit {
   title = 'app';
+  mobHeight: number;
+  mobWidth: number;
 
   ngOnInit() {}
 
-  constructor(private elementRef: ElementRef) {
+  constructor(private elementRef: ElementRef, private dataService: DataService) {
+    this.mobHeight = (window.screen.height);
+    this.mobWidth = (window.screen.width);
+    console.log(this.mobHeight);
+    console.log(this.mobWidth);
+    this.dataService.defineDeviceDims(this.mobWidth, this.mobHeight);
   }
 
   ngAfterViewInit() {

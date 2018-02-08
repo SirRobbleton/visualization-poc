@@ -75,7 +75,7 @@ export class MapComponent implements OnInit, OnDestroy, DoCheck, AfterViewInit {
   };
   public view = [];
   public gradient = false;
-  public label = 'Total (sqft)';
+  public label = 'Total';
 
   public config = {
     'type': 'map',
@@ -211,15 +211,6 @@ export class MapComponent implements OnInit, OnDestroy, DoCheck, AfterViewInit {
     );
     this.refreshWarehouses();
     console.log('MAP: OnInit');
-    // this.whService.pieColumnSize.subscribe((dims: any) => {
-    //   if (dims.width !== this.view[0]) {
-    //     if (dims.width < 335) {
-    //       this.view = [dims.width, dims.height];
-    //     } else {
-    //       this.view = [dims.width + dims.width * 0.5, dims.height];
-    //     }
-    //   }
-    // });
   }
 
   ngAfterViewInit() {

@@ -7,6 +7,7 @@ export class AuthService {
 
   public authenticationDone = new BehaviorSubject<string>('');
   public loginSuccessful = new BehaviorSubject<string>('');
+  public registrySuccessful = new BehaviorSubject<string>('');
 
   public token: string;
 
@@ -14,8 +15,17 @@ export class AuthService {
 
   signUpUser(email: string, password: string) {
     firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then(
+        response => {
+          console.log(response);
+          this.registrySuccessful.next('success');
+        }
+      )
       .catch(
-        error => console.log(error)
+        error => {
+          console.log(error);
+          this.registrySuccessful.next(error.message);
+        }
       );
   }
 

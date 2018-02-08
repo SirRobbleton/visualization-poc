@@ -8,7 +8,7 @@ import {LoginComponent} from '../auth/login/login.component';
 import {AuthComponent} from '../auth/auth/auth.component';
 
 export const routes: Routes = [
-  {path: '', redirectTo: 'uploadPlan', pathMatch: 'full'},
+  {path: '', redirectTo: 'auth', pathMatch: 'full'},
   {path: 'uploadPlan', component: UploaderComponent},
   {path: 'displayPlan', component: VisualsComponent},
   {path: 'playground', component: PlaygroundComponent},

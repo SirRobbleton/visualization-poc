@@ -1,30 +1,46 @@
  <mdb-navbar SideClass="navbar navbar-expand-md navbar-expand-lg navbar-dark primary-color-dark sticky-top scrolling-navbar">
   <logo>
-    <a href="#" class="navbar-brand">Visualizer POC</a>
+    <a href="#" class="navbar-brand">
+      <i class="fa fa-eye fa-3x" aria-hidden="true">
+        Visualizer
+      </i>
+    </a>
   </logo>
   <links>
     <ul class="navbar-nav mr-auto col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      <li class="nav-item col-xs-2 col-sm-2 col-md-2 col-lg-2" [routerLinkActive]="['active']">
-        <a class="nav-link waves-light" (click)="setCurrentView('auth')" [routerLink]="['auth']" mdbRippleRadius>Authentication</a>
+      <li class="nav-item col-xs-2 col-sm-2 col-md-2 col-lg-2 ml-auto" [routerLinkActive]="['active']">
+        <a [ngClass]="{'disabled': !isLoggedIn}" class="nav-link waves-light" (click)="setCurrentView('updatePlan')" [routerLink]="['uploadPlan']" mdbRippleRadius>
+          <i class="fa fa-upload fa-3x" aria-hidden="true"></i><br>
+          Upload Plan</a>
       </li>
       <li class="nav-item col-xs-2 col-sm-2 col-md-2 col-lg-2" [routerLinkActive]="['active']">
-        <a class="nav-link waves-light" (click)="setCurrentView('updatePlan')" [routerLink]="['uploadPlan']" mdbRippleRadius>Upload Plan</a>
+        <a [ngClass]="{'disabled': !planUploaded}" class="nav-link waves-light" (click)="setCurrentView('displayPlan')" [routerLink]="['displayPlan']" mdbRippleRadius>
+          <i class="fa fa-calendar fa-3x" aria-hidden="true"></i><br>
+          Weekly Plan</a>
       </li>
+      <!--<li class="nav-item col-xs-2 col-sm-2 col-md-2 col-lg-2" [routerLinkActive]="['active']">-->
+        <!--<a [ngClass]="{'disabled': !isLoggedIn}" class="nav-link waves-light" (click)="setCurrentView('playground')" [routerLink]="['playground']" mdbRippleRadius>-->
+          <!--<i class="fa fa-soccer-ball-o fa-3x" aria-hidden="true"></i><br>-->
+          <!--Playground</a>-->
+      <!--</li>-->
       <li class="nav-item col-xs-2 col-sm-2 col-md-2 col-lg-2" [routerLinkActive]="['active']">
-        <a class="nav-link waves-light" (click)="setCurrentView('displayPlan')" [routerLink]="['displayPlan']" mdbRippleRadius>Weekly Plan</a>
+        <a [ngClass]="{'disabled': !isLoggedIn}" class="nav-link waves-light" (click)="setCurrentView('displayMap')" [routerLink]="['/displayMap']" mdbRippleRadius>
+          <i class="fa fa-map fa-3x" aria-hidden="true"></i><br>
+          Map</a>
       </li>
-      <li class="nav-item col-xs-2 col-sm-2 col-md-2 col-lg-2" [routerLinkActive]="['active']">
-        <a class="nav-link waves-light" (click)="setCurrentView('playground')" [routerLink]="['playground']" mdbRippleRadius>Playground</a>
-      </li>
-      <li class="nav-item col-xs-2 col-sm-2 col-md-2 col-lg-2" [routerLinkActive]="['active']">
-        <a class="nav-link waves-light" (click)="setCurrentView('displayMap')" [routerLink]="['displayMap']" mdbRippleRadius>Map</a>
-      </li>
-      <li class="nav-item col-xs-2 col-sm-2 col-md-2 col-lg-2">
-        <a class="nav-link disabled" >Detailed View</a>
+      <!--<li class="nav-item col-xs-2 col-sm-2 col-md-2 col-lg-2">-->
+        <!--<a class="nav-link disabled" >-->
+          <!--<i class="fa fa-question fa-3x" aria-hidden="true"></i><br>-->
+          <!--Detailed View</a>-->
+      <!--</li>-->
+      <li class="nav-item col-xs-2 col-sm-2 col-md-2 col-lg-2 ml-auto" [routerLinkActive]="['active']">
+        <a class="nav-link waves-light" (click)="setCurrentView('auth')" [routerLink]="['auth']" mdbRippleRadius>
+          <i class="fa fa-user fa-3x" aria-hidden="true"></i><br>
+          Login</a>
       </li>
     </ul>
   </links>
 </mdb-navbar>
    <div class="m-t-0">
-     <router-outlet [currentView]="currentView"></router-outlet>
+     <router-outlet></router-outlet>
    </div>

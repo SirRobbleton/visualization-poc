@@ -1,5 +1,5 @@
 import {
-  AfterContentInit, AfterViewChecked, Component, DoCheck, Injectable, OnChanges, OnInit,
+  AfterContentInit, AfterViewChecked, Component, DoCheck, Injectable, Input, OnChanges, OnInit,
   SimpleChanges
 } from '@angular/core';
 import {parseString, xml2js} from 'xml2js';
@@ -12,12 +12,10 @@ import {VisualDataService} from '../services/visual-data.service';
 })
 export class UploaderComponent implements OnInit, DoCheck {
 
-  @Injectable() private currentView: string;
-
   private optimizerInputXML: string;
   private optimizerInputJSON: string;
   private displayXML: boolean;
-  private isXmlLoaded: boolean;
+  public isXmlLoaded: boolean;
 
   constructor(private vdService: VisualDataService) {
   }

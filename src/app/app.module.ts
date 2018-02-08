@@ -7,10 +7,6 @@ import { PerfectScrollbarModule, PerfectScrollbarConfigInterface } from 'ngx-per
 import {NgbModule, NgbProgressbarConfig} from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
-import {ServerComponent} from './server/server.component';
-import { ServersComponent } from './servers/servers.component';
-import {WarningsComponent} from './warnings/warnings.component';
-import {SuccessComponent} from './success/success.component';
 import { DetailsComponent } from './details/details.component';
 import {DataService} from './services/data.service';
 import { VisualsComponent } from './visuals/visuals.component';
@@ -46,10 +42,6 @@ import { WarehouseDetailsPieComponent } from './warehouse-details-pie/warehouse-
 @NgModule({
   declarations: [
     AppComponent,
-    ServerComponent,
-    ServersComponent,
-    WarningsComponent,
-    SuccessComponent,
     DetailsComponent,
     VisualsComponent,
     Vis3dGraphDirective,

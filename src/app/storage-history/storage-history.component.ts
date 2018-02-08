@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {DataService} from '../services/data.service';
 
 @Component({
   selector: 'app-storage-history',
@@ -72,9 +73,16 @@ export class StorageHistoryComponent implements OnInit {
   // line, area
   legend = false;
   autoScale = false;
-  constructor() { }
+  constructor(private dataService: DataService) {
+  }
 
   ngOnInit() {
+    this.dataService.deviceDims.subscribe((dims: number[]) => {
+      if (dims[0] < 370) {
+        this.view = [310, 300];
+        console.log(this.view);
+      }
+    });
   }
 
   onSelect(event) {

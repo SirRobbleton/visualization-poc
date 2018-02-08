@@ -2,14 +2,14 @@
   <div class="row">
     <div class="col-2 col-sm-3 col-md-4 col-lg-4">
     </div>
-    <div class="col-8 col-sm-6 col-md-4 col-lg-4">
+    <div class="animated fadeIn col-8 col-sm-6 col-md-4 col-lg-4">
       <form [formGroup]="radioGroupForm">
         <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" formControlName="model">
           <label ngbButtonLabel class="col-6 btn btn-primary primary-color-dark">
             <input (click)="toggleAuth('login')" ngbButton type="radio" value="login">
             <i class="fa fa-sign-in fa-5x" aria-hidden="true"></i>
             <br><br>
-            Sign In
+            Sign <br>In
           </label>
           <label ngbButtonLabel class="col-6 btn btn-primary primary-color-dark">
             <input (click)="toggleAuth('register')" ngbButton type="radio" value="signUp">

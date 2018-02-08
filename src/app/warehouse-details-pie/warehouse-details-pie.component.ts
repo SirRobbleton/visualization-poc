@@ -17,19 +17,25 @@ export class WarehouseDetailsPieComponent implements OnInit, AfterViewChecked, A
 
   @Output('whDetailsLoaded') whDetailsLoaded: EventEmitter<boolean> = new EventEmitter();
 
+  public innerWidth = 0;
+
   constructor(private whService: WarehouseDataService) {
   }
 
   ngOnInit() {
     console.log('WH DETAILS PIE: OnInit');
     this.whService.pieColumnSize.subscribe((dims: any) => {
+      this.innerWidth = window.innerWidth;
       if (dims.width !== this.view[0]) {
         if (dims.width < 335) {
           this.view = [dims.width, dims.height];
+        } else if (this.innerWidth > 408 && this.innerWidth < 768) {
+          this.view = [dims.width * 1.1, dims.height];
         } else {
-          this.view = [dims.width * 1.5, dims.height];
+          this.view = [dims.width * 1.2, dims.height];
         }
       }
+      console.log(this.innerWidth);
       console.log('WH DETAILS PIE dims: ' + dims.width + ', ' + dims.height);
     });
   }

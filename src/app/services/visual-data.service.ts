@@ -23,9 +23,10 @@ export class VisualDataService {
   private all_weeks = [];
   private optimizerInputJSON;
   private optimizerInputXML;
+  public dataUploaded = new BehaviorSubject<boolean>(false);
   public selectedData = new BehaviorSubject<object>({});
   private isXmlLoaded: boolean;
-  public currentView = new BehaviorSubject<string>('updatePlan');
+  public currentView = new BehaviorSubject<string>('auth');
   private saveState = {
     week: '',
     resource: ''
@@ -71,6 +72,7 @@ export class VisualDataService {
         break;
       }
     }
+    this.dataUploaded.next(true);
     this.isXmlLoaded = true;
   }
 

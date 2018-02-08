@@ -1,8 +1,8 @@
 <div class="row">
   <div class="col-sm-2 col-md-3 col-lg-4">
   </div>
-  <div class="col-12 col-sm-8 col-md-6 col-lg-4">
-    <form [formGroup]="radioGroupForm">
+  <div class="col-12 col-sm-8 col-md-6 col-lg-6">
+    <form class="col-12 ml-auto" [formGroup]="radioGroupForm">
       <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" formControlName="model">
         <label ngbButtonLabel class="col-4 btn btn-primary primary-color-dark">
           <input (click)="toggleView('register')" ngbButton type="radio" value="registerWarehouse">
@@ -25,32 +25,32 @@
       </div>
     </form>
   </div>
-  <div class="col-sm-2 col-md-3 col-lg-4">
+  <div class="col-sm-2 col-md-3">
   </div>
 </div>
 <br><br>
 <div *ngIf="selectedView === 'registerWarehouse'">
   <div class="row animated fadeIn">
     <div class="col-12 col-sm-12 col-md-10 col-lg-10">
-      <div class="form-group">
+      <div class="form-group waves-light waves-light ml-auto" mdbRippleRadius>
         <input #search  placeholder="Search for Location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" [formControl]="searchControl">
       </div>
     </div>
   </div>
   <div class="row animated fadeIn">
-    <div class="col-12 col-sm-12 col-md-2 col-lg-2">
+    <div class="col-12 col-sm-12 col-md-2 col-lg-2 waves-light waves-light ml-auto" mdbRippleRadius>
       <input #wh id="input_wh" placeholder="Warehouse ID" type="text">
     </div>
-    <div class="col-6 col-sm-6 col-md-2 col-lg-2">
+    <div class="col-6 col-sm-6 col-md-2 col-lg-2 waves-light waves-light ml-auto" mdbRippleRadius>
       <input #lat id="input_lat" placeholder="Latitude" type="number" value={{latitude}} class="">
     </div>
-    <div class="col-6 col-sm-6 col-md-2 col-lg-2">
+    <div class="col-6 col-sm-6 col-md-2 col-lg-2 waves-light waves-light ml-auto" mdbRippleRadius>
       <input #lon id="input_lon" placeholder="Longitude" type="number" value={{longitude}} class="">
     </div>
-    <div class="col-6 col-sm-6 col-md-2 col-lg-2">
+    <div class="col-6 col-sm-6 col-md-2 col-lg-2 waves-light waves-light ml-auto" mdbRippleRadius>
       <input #free id="input_free" placeholder="Free Space" type="number" class="">
     </div>
-    <div class="col-6 col-sm-6 col-md-2 col-lg-2">
+    <div class="col-6 col-sm-6 col-md-2 col-lg-2 waves-light waves-light ml-auto" mdbRippleRadius>
       <input #used id="input_used" placeholder="Used Space" type="number" class="">
     </div>
     <div class="col-12 col-sm-12 col-md-2 col-lg-2">
@@ -67,18 +67,30 @@
     <table class="table" id="warehouses">
       <thead>
       <tr>
-        <th id="warehouse" class="primary-color-dark">Warehouse</th>
-        <th id="location" class="primary-color-dark">Location</th>
-        <th #capacityCol id="capacity" class="primary-color-dark"
-            (window:resize)="onResize($event)">Capacity</th>
-        <th id="partition" class="primary-color-dark">Partitioning</th>
+        <th style="text-align: left;"
+            id="warehouse"
+            class="primary-color-dark">Warehouse</th>
+        <!--<th style="text-align: center;"-->
+            <!--id="location"-->
+            <!--class="primary-color-dark">Location</th>-->
+        <th #capacityCol style="text-align: center;"
+            id="capacity"
+            class="primary-color-dark"
+            (window:resize)="onResize($event)"
+            (click)="orderWarehousesBySpace()">Capacity (m<sup>3</sup>)
+          <i *ngIf="!sortReverse && sorted" class="fa fa-caret-down"></i>
+          <i *ngIf="sortReverse && sorted" class="fa fa-caret-up"></i>
+        </th>
+        <th style="text-align: center;"
+            id="partition"
+            class="primary-color-dark">Partitioning</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let warehouse of warehouses" (click)="rowSelected(warehouse)">
-        <td>{{warehouse.name}}</td>
-        <td>{{warehouse.lat}} , {{warehouse.lon}}</td>
-        <td>{{warehouse.getCapacity().total}}</td>
+        <td style="text-align: left; font-size: 15px;">{{warehouse.name}}</td>
+        <!--<td style="text-align: center; font-size: 12px;">{{warehouse.lat}} , {{warehouse.lon}}</td>-->
+        <td style="text-align: center; margin: 0px 0; font-size: 15px">{{warehouse.getCapacity().total}}</td>
         <td>
           <app-warehouse (barIsLoaded)="onResize()" [barSize]="barColWidth" [warehouse]="warehouse"></app-warehouse>
         </td>

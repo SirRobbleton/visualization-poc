@@ -15,6 +15,17 @@ export class SignupComponent implements OnInit {
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
+    this.authService.registrySuccessful.subscribe(
+      (value: string) => {
+        if (value === 'success') {
+          this.registrySuccessful = true;
+          this.errorMsg = '';
+        } else {
+          this.registrySuccessful = false;
+          this.errorMsg = value;
+        }
+      }
+    );
   }
 
   public onSignUp(form: NgForm) {

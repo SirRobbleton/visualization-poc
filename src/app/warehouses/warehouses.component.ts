@@ -24,6 +24,9 @@ export class WarehousesComponent implements OnInit, DoCheck {
   public longitude: number;
   public searchControl: FormControl;
 
+  public sortReverse: boolean = null;
+  public sorted = false;
+
   public warehouses: Warehouse[];
 
   constructor(private whService: WarehouseDataService,
@@ -114,6 +117,24 @@ export class WarehousesComponent implements OnInit, DoCheck {
     this.selectedWarehouse.emit({
         warehouse: warehouse.name
       });
+  }
+
+  orderWarehousesBySpace() {
+    if (this.sortReverse === null) {
+      this.sortReverse = true;
+      this.sorted = true;
+      this.warehouses.sort((a, b) => {
+        return a.getCapacity().total - b.getCapacity().total;
+      });
+    } else if (this.sortReverse) {
+      this.sortReverse = false;
+      this.warehouses.sort((a, b) => {
+        return b.getCapacity().total - a.getCapacity().total;
+      });
+    } else {
+      this.sortReverse = null;
+      this.sorted = false;
+    }
   }
 
   toggleView(view: string) {

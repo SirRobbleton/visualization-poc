@@ -10,8 +10,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, AfterViewChecked {
-  @ViewChild('email') emailValue: ElementRef;
-  @ViewChild('pw') pwValue: ElementRef;
+  @ViewChild('f') form: ElementRef;
 
   public loginSuccessful: boolean;
   public errorMsg = '';
@@ -51,10 +50,11 @@ export class LoginComponent implements OnInit, AfterViewChecked {
   }
 
   onLogin(form: NgForm) {
-    // const email = form.value.email;
-    // const pw = form.value.password;
-    const email = 'hans@gmail.com';
-    const pw = 'hanspeter';
+    this.errorMsg = '';
+    const email = form.value.email;
+    const pw = form.value.password;
+    // const email = 'hans@gmail.com';
+    // const pw = 'hanspeter';
     this.authService.signInUser(email, pw);
   }
 }
