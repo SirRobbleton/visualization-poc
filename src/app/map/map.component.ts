@@ -49,6 +49,7 @@ import {Router} from '@angular/router';
 export class MapComponent implements OnInit, OnDestroy, DoCheck, AfterViewInit {
   @ViewChild('chartContainer') chartContainer: ElementRef;
   @ViewChild('detailContainer') detailContainer: ElementRef;
+  @ViewChild('detailSection') detailSection: ElementRef;
   @ViewChild('mapContainer') mapContainer: ElementRef;
 
   public isLoggedIn;
@@ -273,7 +274,13 @@ export class MapComponent implements OnInit, OnDestroy, DoCheck, AfterViewInit {
     this.AmCharts.addListener(this.chart, 'clickMapObject', (e) => {
       const selectedWh = e.mapObject.balloonText;
       this.setSelectedWarehouse(selectedWh);
+      this.goToInfoSection();
     });
+  }
+
+  goToInfoSection() {
+    this.detailSection.nativeElement.scrollIntoView({block: 'center',  behaviour: 'smooth'});
+    console.log('SCROLL TO INFO');
   }
 
   public setSelectedWarehouse(whName: string, event?) {
@@ -302,6 +309,7 @@ export class MapComponent implements OnInit, OnDestroy, DoCheck, AfterViewInit {
       },
     ];
     // console.log('SELECTED: ' + whName.toString());
+    this.goToInfoSection();
   }
 
   onResize() {
