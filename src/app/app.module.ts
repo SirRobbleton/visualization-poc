@@ -38,6 +38,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { AuthComponent } from './auth/auth/auth.component';
 import {AgmCoreModule} from '@agm/core';
 import { WarehouseDetailsPieComponent } from './warehouse-details-pie/warehouse-details-pie.component';
+import {Ng2PageScrollModule} from 'ng2-page-scroll';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { WarehouseDetailsPieComponent } from './warehouse-details-pie/warehouse-
     ReactiveFormsModule,
     MDBBootstrapModule.forRoot(),
     NgbModule.forRoot(),
+    Ng2PageScrollModule,
     JsonpModule,
     RouterModule.forRoot(routes.routes, {useHash: true}),
     // PerfectScrollbarModule,

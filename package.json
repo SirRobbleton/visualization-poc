@@ -44,6 +44,7 @@
     "js2xmlparser": "^3.0.0",
     "jsonpath": "^1.0.0",
     "mdbootstrap": "^4.4.4",
+    "ng2-page-scroll": "^4.0.0-beta.12",
     "ngx-perfect-scrollbar": "^4.3.1",
     "rxjs": "^5.4.2",
     "tablesorter": "^2.29.5",

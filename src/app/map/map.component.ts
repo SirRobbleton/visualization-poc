@@ -1,5 +1,5 @@
 import {
-  AfterViewInit, Component, DoCheck, ElementRef, NgZone, OnDestroy, OnInit,
+  AfterViewInit, Component, DoCheck, ElementRef, Inject, NgZone, OnDestroy, OnInit,
   ViewChild
 } from '@angular/core';
 import { AmChartsService, AmChart } from '@amcharts/amcharts3-angular';
@@ -9,6 +9,8 @@ import * as resources from '../services/resource-constants';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {AuthService} from '../services/auth.service';
 import {Router} from '@angular/router';
+import {PageScrollService, PageScrollInstance, PageScrollConfig} from 'ng2-page-scroll';
+import {DOCUMENT} from '@angular/common';
 
 @Component({
   selector: 'app-map',
@@ -193,7 +195,11 @@ export class MapComponent implements OnInit, OnDestroy, DoCheck, AfterViewInit {
   constructor(private router: Router,
               private AmCharts: AmChartsService,
               private whService: WarehouseDataService,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private pageScrollService: PageScrollService,
+              @Inject(DOCUMENT) private document: any) {
+    PageScrollConfig.defaultScrollOffset = 100;
+    PageScrollConfig.defaultDuration = 500;
     console.log('MAP: Constructor');
   }
 
@@ -279,8 +285,10 @@ export class MapComponent implements OnInit, OnDestroy, DoCheck, AfterViewInit {
   }
 
   goToInfoSection() {
-    this.detailSection.nativeElement.scrollIntoView({block: 'center',  behaviour: 'smooth'});
+    // this.detailSection.nativeElement.scrollIntoView({block: 'center',  behaviour: 'smooth'});
     console.log('SCROLL TO INFO');
+    const pageScrollInstance: PageScrollInstance = PageScrollInstance.simpleInstance(this.document, '#detailSection');
+    this.pageScrollService.start(pageScrollInstance);
   }
 
   public setSelectedWarehouse(whName: string, event?) {

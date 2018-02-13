@@ -51,10 +51,10 @@ export class LoginComponent implements OnInit, AfterViewChecked {
 
   onLogin(form: NgForm) {
     this.errorMsg = '';
-    // const email = form.value.email;
-    // const pw = form.value.password;
-    const email = 'hans@gmail.com';
-    const pw = 'hanspeter';
+    const email = form.value.email;
+    const pw = form.value.password;
+    // const email = 'hans@gmail.com';
+    // const pw = 'hanspeter';
     this.authService.signInUser(email, pw);
   }
 }
